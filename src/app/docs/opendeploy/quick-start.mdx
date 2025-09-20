@@ -1,0 +1,80 @@
+import { DocsLayout } from "@/components/layout/docs/docs-layout"
+
+export const metadata = { title: "OpenDeploy CLI — Quick Start" }
+
+<DocsLayout showTableOfContents={true} tableOfContents={[
+  { id: 'install', title: 'Install', level: 2 },
+  { id: 'start', title: 'Start (Wizard)', level: 2 },
+  { id: 'generate', title: 'Generate Config', level: 2 },
+  { id: 'detect', title: 'Detect & Doctor', level: 2 },
+  { id: 'env', title: 'Environment', level: 2 },
+  { id: 'seed', title: 'Database Seeding', level: 2 },
+  { id: 'deploy', title: 'Deploy', level: 2 },
+]}>
+  <article className="prose prose-gray dark:prose-invert max-w-none">
+    <h1>Quick Start</h1>
+
+    <h2 id="install">Install</h2>
+
+```bash
+# One-off usage
+pnpm dlx opendeploy --help
+# or
+npx opendeploy --help
+```
+
+    <h2 id="start">Start (Wizard)</h2>
+
+```bash
+# Detects framework, ensures provider config (vercel.json/netlify.toml),
+# optionally syncs env, then deploys. Skips generation when files exist.
+opendeploy start
+```
+
+    <h2 id="generate">Generate Config</h2>
+
+```bash
+opendeploy generate vercel   # writes vercel.json (idempotent)
+opendeploy generate netlify  # writes netlify.toml (idempotent; Next runtime/plugin, Nuxt defaults)
+opendeploy generate turbo    # writes turbo.json (cache outputs)
+```
+
+    <h2 id="detect">Detect & Doctor</h2>
+
+```bash
+opendeploy detect --json
+opendeploy doctor --json
+```
+
+    <h2 id="env">Environment</h2>
+
+```bash
+# Sync preview env from .env.local to Vercel (dry run + JSON)
+opendeploy env sync vercel --file .env.local --env preview --dry-run --json
+
+# Pull env from Vercel into local files
+opendeploy env pull vercel --env preview
+opendeploy env pull vercel --env prod
+```
+
+    <h2 id="seed">Database Seeding</h2>
+
+```bash
+# Prisma
+opendeploy seed --schema prisma --env-file .env.production.local --env prod --yes --json
+
+# Drizzle (script)
+opendeploy seed --schema script --script db:push --env-file ../../apps/web/.env.production.local --env prod --yes --json
+```
+
+    <h2 id="deploy">Deploy</h2>
+
+```bash
+# Vercel preview; set --path for monorepos
+opendeploy up vercel --env preview --json --path apps/web
+
+# Netlify preview (site required)
+opendeploy up netlify --env preview --project <SITE_ID> --json
+```
+  </article>
+</DocsLayout>
