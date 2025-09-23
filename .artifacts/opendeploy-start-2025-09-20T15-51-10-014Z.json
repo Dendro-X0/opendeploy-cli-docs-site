@@ -1,0 +1,13 @@
+{"action":"start","provider":"vercel","target":"prod","event":"stderr","data":"Vercel CLI 48.0.0\n"}
+{"action":"start","provider":"vercel","target":"prod","event":"stderr","data":"Retrieving project…\n"}
+{"action":"start","provider":"vercel","target":"prod","event":"stderr","data":"Deploying fictionalforges-projects/opendeploy-cli-docs-site\n"}
+{"action":"start","provider":"vercel","target":"prod","event":"stderr","data":"Uploading [--------------------] (0.0B/5.8KB)\n"}
+{"action":"start","provider":"vercel","target":"prod","event":"stderr","data":"Uploading [======--------------] (1.9KB/5.8KB)\n"}
+{"action":"start","provider":"vercel","target":"prod","event":"stderr","data":"Uploading [=============-------] (3.8KB/5.8KB)\nUploading [===================-] (5.8KB/5.8KB)\nUploading [====================] (5.8KB/5.8KB)\n"}
+{"action":"start","provider":"vercel","target":"prod","event":"logs","logsUrl":"https://vercel.com/fictionalforges-projects/opendeploy-cli-docs-site/En9Q8Nv3pMcai6TzShBkokYBjjXm"}
+{"action":"start","provider":"vercel","target":"prod","event":"stderr","data":"Inspect: https://vercel.com/fictionalforges-projects/opendeploy-cli-docs-site/En9Q8Nv3pMcai6TzShBkokYBjjXm [3s]\nProduction: https://opendeploy-cli-docs-site-6v217olxj-fictionalforges-projects.vercel.app [3s]\nQueued\n"}
+{"action":"start","provider":"vercel","target":"prod","event":"stdout","data":"https://opendeploy-cli-docs-site-6v217olxj-fictionalforges-projects.vercel.app"}
+{"action":"start","provider":"vercel","target":"prod","event":"stderr","data":"Building\n"}
+{"action":"start","provider":"vercel","target":"prod","event":"stderr","data":"Error: The file \"/vercel/path0/out/routes-manifest.json\" couldn't be found. This is often caused by a misconfiguration in your project.\n"}
+{"action":"start","target":"prod","provider":"vercel","event":"logs","logsUrl":"https://vercel.com"}
+{"action":"start","target":"prod","provider":"vercel","event":"done","ok":false}

@@ -5,18 +5,37 @@ import { Button } from "@/components/ui/button"
 import { Copy, Check } from "lucide-react"
 
 type Cmd = { readonly key: string; readonly label: string; readonly code: string }
+type Manager = "npm" | "pnpm" | "yarn" | "bun"
+type InstallMode = "binary" | "manager"
+
+function execPrefix(m: Manager): string {
+  if (m === "pnpm") return "pnpm dlx"
+  if (m === "yarn") return "yarn dlx"
+  if (m === "bun") return "bunx"
+  return "npx" // npm
+}
 
 export function QuickStart(): React.ReactElement {
   const [copiedKey, setCopiedKey] = useState<string>("")
+  const [mgr, setMgr] = useState<Manager>("npm")
+  const [mode, setMode] = useState<InstallMode>("binary")
 
-  const commands: ReadonlyArray<Cmd> = [
-    { key: "start", label: "# Start wizard", code: "opendeploy start" },
-    { key: "gen-vercel", label: "# Generate vercel.json", code: "opendeploy generate vercel" },
-    { key: "gen-netlify", label: "# Generate netlify.toml", code: "opendeploy generate netlify" },
-    { key: "gen-turbo", label: "# Generate turbo.json", code: "opendeploy generate turbo" },
-    { key: "up-vercel", label: "# Preview deploy (Vercel)", code: "opendeploy up vercel --env preview --ndjson --timestamps" },
-    { key: "up-netlify", label: "# Preview deploy (Netlify)", code: "opendeploy up netlify --env preview --project <SITE_ID> --ndjson --timestamps" },
-  ]
+  const x = execPrefix(mgr)
+  const commands: ReadonlyArray<Cmd> = mode === "binary"
+    ? [
+        { key: "start", label: "# Start wizard", code: "opd start" },
+        { key: "gen-vercel", label: "# Generate vercel.json", code: "opd start --provider vercel --generate-config-only" },
+        { key: "gen-netlify", label: "# Generate netlify.toml", code: "opd start --provider netlify --generate-config-only" },
+        { key: "up-vercel", label: "# Preview deploy (Vercel)", code: "opd up vercel --env preview --ndjson --timestamps" },
+        { key: "up-netlify", label: "# Preview deploy (Netlify)", code: "opd up netlify --env preview --project <SITE_ID> --ndjson --timestamps" },
+      ]
+    : [
+        { key: "start", label: "# Start wizard", code: `${x} opendeploy-cli start` },
+        { key: "gen-vercel", label: "# Generate vercel.json", code: `${x} opendeploy-cli start --provider vercel --generate-config-only` },
+        { key: "gen-netlify", label: "# Generate netlify.toml", code: `${x} opendeploy-cli start --provider netlify --generate-config-only` },
+        { key: "up-vercel", label: "# Preview deploy (Vercel)", code: `${x} opendeploy-cli up vercel --env preview --ndjson --timestamps` },
+        { key: "up-netlify", label: "# Preview deploy (Netlify)", code: `${x} opendeploy-cli up netlify --env preview --project <SITE_ID> --ndjson --timestamps` },
+      ]
 
   const all: string = commands.map((c) => `${c.label}\n${c.code}`).join("\n\n") + "\n"
 
@@ -60,6 +79,45 @@ export function QuickStart(): React.ReactElement {
           </Button>
         </div>
         <div className="p-6 font-mono text-sm leading-7 space-y-3">
+          <div className="flex items-center gap-2 pb-2">
+            <span className="text-xs text-muted-foreground">Install method:</span>
+            <div className="flex items-center gap-1">
+              <Button
+                type="button"
+                variant={mode === "binary" ? "default" : "outline"}
+                size="sm"
+                className="h-7 px-2"
+                onClick={() => setMode("binary")}
+                aria-pressed={mode === "binary"}
+              >Releases (opd)</Button>
+              <Button
+                type="button"
+                variant={mode === "manager" ? "default" : "outline"}
+                size="sm"
+                className="h-7 px-2"
+                onClick={() => setMode("manager")}
+                aria-pressed={mode === "manager"}
+              >Package Manager</Button>
+            </div>
+          </div>
+          {mode === "manager" ? (
+          <div className="flex items-center gap-2 pb-2">
+            <span className="text-xs text-muted-foreground">Package manager:</span>
+            <div className="flex items-center gap-1">
+              {(["npm","pnpm","yarn","bun"] as Manager[]).map((m) => (
+                <Button
+                  key={m}
+                  type="button"
+                  variant={mgr === m ? "default" : "outline"}
+                  size="sm"
+                  className="h-7 px-2"
+                  onClick={() => setMgr(m)}
+                  aria-pressed={mgr === m}
+                >{m}</Button>
+              ))}
+            </div>
+          </div>
+          ) : null}
           {commands.map((c) => (
             <div key={c.key} className="flex items-start justify-between gap-3 group">
               <div

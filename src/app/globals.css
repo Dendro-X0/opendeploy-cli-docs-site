@@ -234,3 +234,8 @@ pre.line-numbers .line-numbers-rows > span:before {
   text-align: right;
   color: var(--muted-foreground);
 }
+
+/* Light */
+.logo { color: #111827; }
+/* Dark */
+:root[data-theme="dark"] .logo { color: #F8FAFC; }

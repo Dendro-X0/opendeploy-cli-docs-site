@@ -5,7 +5,7 @@ import { Copy, Check, Terminal } from "lucide-react"
 
 export function HeroStartCommand(): React.ReactElement {
   const [copied, setCopied] = useState<boolean>(false)
-  const cmd: string = "opendeploy start"
+  const cmd: string = "opd start"
 
   async function copy(): Promise<void> {
     try {
@@ -23,7 +23,7 @@ export function HeroStartCommand(): React.ReactElement {
         type="button"
         onClick={copy}
         className="group relative flex items-center gap-3 rounded-xl border border-gray-200 bg-white/70 px-5 py-3 text-base font-mono text-gray-900 shadow-sm backdrop-blur hover:bg-white dark:border-gray-800 dark:bg-gray-900/70 dark:text-gray-100 dark:hover:bg-gray-900"
-        aria-label="Copy: opendeploy start"
+        aria-label="Copy: opd start"
       >
         <Terminal className="h-5 w-5 text-gray-600 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-400" />
         <span className="select-none">{cmd}</span>
@@ -37,7 +37,7 @@ export function HeroStartCommand(): React.ReactElement {
       </button>
       <p className="text-sm text-muted-foreground max-w-2xl text-center">
         Runs a quick, end‑to‑end flow: detect framework, ensure provider config (<code>vercel.json</code> / <code>netlify.toml</code>),
-        optionally sync env, and deploy. Existing config files are detected and this step is skipped.
+        optionally sync env, and deploy.
       </p>
     </div>
   )

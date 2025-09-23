@@ -1,13 +1,13 @@
 {
-  "name": "next-docs-template",
-  "version": "0.1.0",
+  "name": "opendeploy-cli-docs-site",
+  "version": "1.0.0-beta",
   "private": true,
   "scripts": {
     "sync:cli-docs": "node scripts/sync-cli-docs.mjs",
     "predev": "node scripts/sync-cli-docs.mjs",
     "dev": "next dev --turbopack",
     "prebuild": "node scripts/sync-cli-docs.mjs",
-    "build": "next build --turbopack",
+    "build": "next build",
     "start": "next start",
     "lint": "biome check",
     "format": "biome format --write"

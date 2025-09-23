@@ -1,10 +1,17 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Github, ExternalLink, Package, BookOpen, Terminal } from "lucide-react"
-import Link from "next/link"
-import { ThemeToggleSwitch } from "@/components/theme/ThemeToggleSwitch"
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import {
+  Github,
+  ExternalLink,
+  Package,
+  BookOpen,
+  Terminal,
+} from "lucide-react";
+import Link from "next/link";
+import { ThemeToggleSwitch } from "@/components/theme/ThemeToggleSwitch";
+// Inline SVG so it inherits currentColor from the container
 
 export function HomeHeader() {
   return (
@@ -13,13 +20,32 @@ export function HomeHeader() {
         {/* Left side - Logo */}
         <Link href="/" className="flex items-center gap-3">
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-            <Package className="h-5 w-5" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="128"
+              height="128"
+              viewBox="0 0 64 64"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-label="OpenDeploy Stack"
+            >
+              <path d="M12 42 H36" />
+              <path d="M16 34 H40" />
+              <path d="M20 26 H44" />
+              <path d="M40 46 L48 38 L56 46" />
+            </svg>
           </div>
           <div className="flex flex-col">
             <span className="font-semibold">OpenDeploy CLI</span>
             <span className="text-xs text-muted-foreground">v1.0.0-beta</span>
           </div>
-          <Badge variant="outline" className="hidden sm:inline-flex text-xs ml-2">
+          <Badge
+            variant="outline"
+            className="hidden sm:inline-flex text-xs ml-2"
+          >
             Beta
           </Badge>
         </Link>
@@ -27,13 +53,23 @@ export function HomeHeader() {
         {/* Right side - Navigation */}
         <div className="flex items-center gap-4">
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
-            <Link href="/docs/opendeploy/overview" className="text-muted-foreground hover:text-foreground transition-colors">
+            <Link
+              href="/docs/opendeploy/overview"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
               Documentation
             </Link>
-            <Link href="/docs/opendeploy/ci" className="text-muted-foreground hover:text-foreground transition-colors">
+            <Link
+              href="/docs/opendeploy/ci"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
               CI Recipes
             </Link>
-            <Link href="https://github.com/Dendro-X0/OpenDeploy-CLI/issues" target="_blank" className="text-muted-foreground hover:text-foreground transition-colors">
+            <Link
+              href="https://github.com/Dendro-X0/OpenDeploy-CLI/issues"
+              target="_blank"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
               Feedback
             </Link>
           </nav>
@@ -52,7 +88,10 @@ export function HomeHeader() {
               </Link>
             </Button>
             <Button variant="ghost" size="sm" asChild>
-              <Link href="https://github.com/Dendro-X0/OpenDeploy-CLI" target="_blank">
+              <Link
+                href="https://github.com/Dendro-X0/OpenDeploy-CLI"
+                target="_blank"
+              >
                 <Github className="h-4 w-4" />
                 <span className="sr-only">GitHub</span>
               </Link>
@@ -68,5 +107,5 @@ export function HomeHeader() {
         </div>
       </div>
     </header>
-  )
+  );
 }

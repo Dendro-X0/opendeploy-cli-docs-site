@@ -5,7 +5,7 @@ Guided wizard for selecting framework, provider, environment, optional env sync,
 
 Usage:
 ```bash
-opendeploy start [--framework <next|astro|sveltekit>] \
+opd start [--framework <next|astro|sveltekit>] \
   [--provider <vercel|netlify>] [--env <prod|preview>] \
   [--path <dir>] [--project <id>] [--org <id>] \
   [--sync-env] [--dry-run] [--json] [--ci] [--no-save-defaults]
@@ -18,7 +18,7 @@ Behavior:
 - Prints a final JSON summary `{ ok, provider, target, url?, logsUrl?, final: true }` when `--json` is used.
 - With `--dry-run`, the wizard prints `{ ok: true, mode: 'dry-run', final: true }` and exits before syncing/deploying.
 - If you pass `--project`/`--org` (Vercel) or `--project` (Netlify) and the directory is not linked yet, the wizard offers to run `vercel link` / `netlify link` inline.
-- After deployment, the wizard prints a copyable non‑interactive command showing an equivalent `opendeploy up ...` invocation.
+- After deployment, the wizard prints a copyable non‑interactive command showing an equivalent `opd up ...` invocation.
 
 Notes:
 - The deploy step reuses the same logic as `up` for parity.
@@ -30,7 +30,7 @@ Detect a Next.js app and its configuration.
 
 Usage:
 ```bash
-opendeploy detect [--json]
+opd detect [--json]
 ```
 Output fields:
 - framework, rootDir, appDir, hasAppRouter
@@ -46,7 +46,7 @@ Validate local environment and provider CLIs.
 
 Usage:
 ```bash
-opendeploy doctor [--ci] [--json] [--verbose] [--fix] [--path <dir>] [--project <vercelProjectId>] [--org <orgId>] [--site <netlifySiteId>]
+opd doctor [--ci] [--json] [--verbose] [--fix] [--path <dir>] [--project <vercelProjectId>] [--org <orgId>] [--site <netlifySiteId>]
 ```
 Checks:
 - Node version
@@ -66,7 +66,7 @@ Generate shell completion scripts for bash, zsh, or PowerShell.
 
 Usage:
 ```bash
-opendeploy completion --shell <bash|zsh|pwsh>
+opd completion --shell <bash|zsh|pwsh>
 ```
 
 Install (user-local examples):
@@ -74,23 +74,23 @@ Install (user-local examples):
 - Bash (Linux/macOS):
 ```bash
 # macOS (Homebrew bash-completion):
-opendeploy completion --shell bash > $(brew --prefix)/etc/bash_completion.d/opendeploy
+opd completion --shell bash > $(brew --prefix)/etc/bash_completion.d/opd
 # Generic (user):
-opendeploy completion --shell bash > ~/.opendeploy-completion.bash
-echo 'source ~/.opendeploy-completion.bash' >> ~/.bashrc
+opd completion --shell bash > ~/.opd-completion.bash
+echo 'source ~/.opd-completion.bash' >> ~/.bashrc
 ```
 
 - Zsh:
 ```bash
-opendeploy completion --shell zsh > ~/.opendeploy-completion.zsh
+opd completion --shell zsh > ~/.opd-completion.zsh
 echo 'fpath=(~/.zfunc $fpath)' >> ~/.zshrc
 mkdir -p ~/.zfunc
-mv ~/.opendeploy-completion.zsh ~/.zfunc/_opendeploy
+mv ~/.opd-completion.zsh ~/.zfunc/_opd
 echo 'autoload -U compinit && compinit' >> ~/.zshrc
 ```
 
 - PowerShell (Windows/macOS/Linux):
 ```powershell
-opendeploy completion --shell pwsh | Out-File -FilePath $PROFILE -Append -Encoding utf8
+opd completion --shell pwsh | Out-File -FilePath $PROFILE -Append -Encoding utf8
 # Restart PowerShell
 ```

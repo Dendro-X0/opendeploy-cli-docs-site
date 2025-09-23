@@ -5,7 +5,7 @@ Deploy the detected app to a provider.
 
 Usage:
 ```bash
-opendeploy deploy <vercel|netlify> \
+opd deploy <vercel|netlify> \
   [--env <prod|preview>] [--project <id>] [--org <id>] [--path <dir>] \
   [--dry-run] [--json] [--ci] [--sync-env] [--alias <domain>]
 ```
@@ -41,7 +41,7 @@ Dry‑run example (Netlify):
 Single‑command deploy: sync env, then deploy.
 
 ```bash
-opendeploy up [vercel|netlify] [--env <prod|preview>] [--project <id>] [--org <id>] [--path <dir>] [--dry-run] [--json] [--ci]
+opd up [vercel|netlify] [--env <prod|preview>] [--project <id>] [--org <id>] [--path <dir>] [--dry-run] [--json] [--ci]
 ```
 
 Behavior:
@@ -53,7 +53,7 @@ Notes:
 - `up` runs in‑process and delegates to `deploy` with `--sync-env` implied.
 - Respects `--path` (monorepo), `--project/--org`, `--env` (`prod` | `preview`).
 - Use `--ndjson --timestamps` to stream logs and emit final summary with `{ final: true }`.
-- When the provider is omitted, the CLI opens the interactive wizard (`opendeploy start`) automatically.
+- When the provider is omitted, the CLI opens the interactive wizard (`opd start`) automatically.
 
 Dry‑run:
 - `--dry-run` emits a deterministic JSON summary and performs no env sync or deploy side effects.
@@ -111,7 +111,7 @@ Promote a preview to production.
 
 Usage (Vercel):
 ```bash
-opendeploy promote vercel --alias <prod-domain> [--path <dir>] [--project <id>] [--org <id>] [--dry-run] [--json]
+opd promote vercel --alias <prod-domain> [--path <dir>] [--project <id>] [--org <id>] [--dry-run] [--json]
 ```
 Behavior (Vercel):
 - Resolves the most recent ready preview deploy and assigns the provided `--alias` domain to it.
@@ -119,7 +119,7 @@ Behavior (Vercel):
 
 Usage (Netlify):
 ```bash
-opendeploy promote netlify [--path <dir>] [--project <siteId>] [--dry-run] [--json]
+opd promote netlify [--path <dir>] [--project <siteId>] [--dry-run] [--json]
 ```
 Behavior (Netlify):
 - Best‑effort promote by deploying current code to production: `netlify deploy --build --prod`.
@@ -182,14 +182,14 @@ Rollback production to a previous successful deployment.
 
 Usage (Vercel):
 ```bash
-opendeploy rollback vercel --alias <prod-domain> [--to <url|sha>] [--path <dir>] [--project <id>] [--org <id>] [--dry-run] [--json]
+opd rollback vercel --alias <prod-domain> [--to <url|sha>] [--path <dir>] [--project <id>] [--org <id>] [--dry-run] [--json]
 ```
 Behavior (Vercel):
 - Resolves the previous production deploy (or a specific one via `--to`) and points the alias back to it.
 
 Usage (Netlify):
 ```bash
-opendeploy rollback netlify [--project <siteId>] [--path <dir>] [--dry-run] [--json]
+opd rollback netlify [--project <siteId>] [--path <dir>] [--dry-run] [--json]
 ```
 Behavior (Netlify):
 - Attempts restore via Netlify API; falls back to dashboard guidance if not permitted.

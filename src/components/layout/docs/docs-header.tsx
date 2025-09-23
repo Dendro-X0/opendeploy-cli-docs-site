@@ -23,9 +23,25 @@ export function DocsHeader({ onMenuClick }: DocsHeaderProps) {
           </Button>
 
           <Link href="/" className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-              <Package className="h-5 w-5" />
-            </div>
+          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="128"
+              height="128"
+              viewBox="0 0 64 64"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-label="OpenDeploy Stack"
+            >
+              <path d="M12 42 H36" />
+              <path d="M16 34 H40" />
+              <path d="M20 26 H44" />
+              <path d="M40 46 L48 38 L56 46" />
+            </svg>
+          </div>
             <div className="flex flex-col">
               <span className="font-semibold">OpenDeploy CLI</span>
               <span className="text-xs text-muted-foreground">v1.0.0-beta</span>

@@ -8,6 +8,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
 import { QuickStart } from "@/components/landing/quick-start"
+import { VideoGallery } from "@/components/landing/video-gallery"
 import { HeroStartCommand } from "@/components/landing/hero-start"
 import { LogoWithBadge } from "@/components/landing/logo-with-badge"
 
@@ -80,6 +81,20 @@ export default function HomePage() {
           {/* Quick Start Commands */}
           <QuickStart />
         </section>
+
+        {/* Video Tutorials */}
+        <VideoGallery
+          headline="Quick Tutorial Videos"
+          subheadline="Short demos showing the Start wizard, CI/args, and troubleshooting a real project."
+          videos={[
+            { title: "60s Quick Deploy (Vercel)", platform: "youtube", id: "dQw4w9WgXcQ", durationSeconds: 60 },
+            { title: "CI + JSON/NDJSON", platform: "youtube", id: "dQw4w9WgXcQ", durationSeconds: 90 },
+            { title: "Troubleshooting & Fix (Docs Site)", platform: "youtube", id: "dQw4w9WgXcQ", durationSeconds: 120 },
+            { title: "Monorepo App Selection", platform: "youtube", id: "dQw4w9WgXcQ", durationSeconds: 75 },
+            { title: "Netlify Prepare-only", platform: "youtube", id: "dQw4w9WgXcQ", durationSeconds: 80 },
+            { title: "Advanced Flags", platform: "youtube", id: "dQw4w9WgXcQ", durationSeconds: 110 }
+          ]}
+        />
 
         {/* Real Features */}
         <section className="py-20 px-4">

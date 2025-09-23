@@ -25,6 +25,7 @@ const navigationItems: ReadonlyArray<NavItem> = [
     title: "Getting Started",
     icon: Rocket,
     items: [
+      { title: "Install", url: "/docs/opendeploy/install" },
       { title: "Quick Start", url: "/docs/opendeploy/overview#quick-start" },
     ],
   },

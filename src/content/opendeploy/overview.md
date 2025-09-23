@@ -1,6 +1,6 @@
 # Overview
 
-OpenDeploy CLI is a Next.js‑first, cross‑provider deployment CLI for Vercel and Netlify. It detects your stack, validates and manages env, seeds databases, and deploys with readable logs and CI‑friendly JSON/NDJSON. Also supports Astro and SvelteKit; Remix is in beta; Nuxt config generation is included.
+OpenDeploy CLI is a Next.js‑first, cross‑provider deployment assistant for Vercel and Netlify. It focuses on reliable, repeatable workflows with great local/CI ergonomics. In addition to Next.js, the CLI supports Astro and SvelteKit, with early (beta) support for Remix and Expo.
 
 ## Status
 
@@ -21,62 +21,63 @@ The 1.0.0 Beta milestone is complete (provider parity, CI ergonomics, extensibil
 - Environment management: `env sync`, `env pull`, `env diff`, `env validate`
 - Database seeding: SQL, Prisma, Script
 - Deploy streaming and logs (Vercel, Netlify) with readable summaries
-- Single‑command deploy: `opendeploy up <provider>` (auto env sync + deploy)
+- Single‑command deploy: `opd up <provider>` (auto env sync + deploy)
 - Colorful human output + NDJSON/JSON for CI and log pipelines
-- Guided setup: `opendeploy init` (generate configs, set env policy)
+- Guided setup: `opd init` (generate configs, set env policy)
 - Monorepo support (workspace‑aware flows, chosen deploy cwd advisories)
 
 ## Config Generation (Quick Table)
 
 | Command                              | Writes         | Summary |
 |--------------------------------------|----------------|---------|
-| `opendeploy generate vercel`         | `vercel.json`  | Minimal config with `version`, optional `buildCommand`, and `outputDirectory` when a `publishDir` is detected. |
-| `opendeploy generate netlify`        | `netlify.toml` | Next.js: uses Netlify Next Runtime if present, else falls back to `@netlify/plugin-nextjs` and `publish = ".next"`. Nuxt: `command = "npx nuxi build"`, `publish = ".output/public"`. Others (Astro, SvelteKit static, Remix static): detection-driven `buildCommand` + `publishDir`. |
-| `opendeploy generate turbo`          | `turbo.json`   | Minimal cache config: `tasks.build.dependsOn = ['^build']`, `outputs = ['.next/**', '!.next/cache/**', 'dist/**']`. |
+| `opd generate vercel`         | `vercel.json`  | Minimal config with `version`, optional `buildCommand`, and `outputDirectory` when a `publishDir` is detected. |
+| `opd generate netlify`        | `netlify.toml` | Next.js: uses Netlify Next Runtime if present, else falls back to `@netlify/plugin-nextjs` and `publish = ".next"`. Nuxt: `command = "npx nuxi build"`, `publish = ".output/public"`. Others (Astro, SvelteKit static, Remix static): detection-driven `buildCommand` + `publishDir`. |
+| `opd generate turbo`          | `turbo.json`   | Minimal cache config: `tasks.build.dependsOn = ['^build']`, `outputs = ['.next/**', '!.next/cache/**', 'dist/**']`. |
 
 ## Quick Start
 
 ```bash
 # 1) Guided start (detect framework/provider, optional env sync)
-opendeploy start --provider vercel --env preview --json
-# Netlify (prepare-only by default): prints recommended commands
-opendeploy start --provider netlify --env preview --project <SITE_ID> --json
-# Or deploy inside the wizard with no rebuild
-opendeploy start --provider netlify --env preview --project <SITE_ID> --deploy --no-build --json
+# Note: start deploys on Vercel. Netlify is prepare-only (wizard prints recommended commands).
+opd start
+
+# (Alternative) Initialize in your repo
+opd init
 
 # 2) Preview: one‑command deploy (sync env then deploy)
-# Tip: running `opendeploy up` without a provider opens the wizard.
-opendeploy up vercel --env preview
-# Netlify
-opendeploy up netlify --env preview --project <SITE_ID>
+# Tip: running `opd up` without a provider opens the wizard.
+opd up vercel --env preview
+# or (Netlify)
+# For Netlify, use `up` or run the recommended commands printed by `start`.
+opd up netlify --env preview --project <SITE_ID>
 
 # 3) Promote to production
 # Vercel: point your prod domain to the preview
-opendeploy promote vercel --alias your-domain.com
+opd promote vercel --alias your-domain.com
 # Netlify: best‑effort promote by deploying to prod
-opendeploy promote netlify --project <SITE_ID>
+opd promote netlify --project <SITE_ID>
 
 # (Optional) Explain plan before executing
-opendeploy explain vercel --env preview --json
+opd explain vercel --env preview --json
 # (Optional) Auto‑fix common linking issues
-opendeploy doctor --fix --project <VERCEL_PROJECT_ID> --org <ORG_ID>
+opd doctor --fix --project <VERCEL_PROJECT_ID> --org <ORG_ID>
 ```
 
-Start here: see `Commands → start`, `Recipes → Wizard (start) — Quick Examples`, and `Response Shapes (CI)` for JSON/NDJSON outputs.
+See `docs/commands.md` for all flags and examples.
 
 ## Common Tasks
 
 ```bash
 # Sync env to Vercel preview (public + DB only)
-opendeploy env sync vercel --file .env.local --env preview \
+opd env sync vercel --file .env.local --env preview \
   --only NEXT_PUBLIC_*,DATABASE_URL --yes
 
 # Diff prod env (CI guard on add/remove)
-opendeploy env diff vercel --file .env.production.local --env prod \
+opd env diff vercel --file .env.production.local --env prod \
   --ignore NEXT_PUBLIC_* --fail-on-add --fail-on-remove --json --ci
 
 # Validate with rules (regex/allowed/oneOf/requireIf)
-opendeploy env validate --file .env \
+opd env validate --file .env \
   --schema ./schemas/production.rules.json --schema-type rules --json --ci
 ```
 
@@ -87,7 +88,7 @@ opendeploy env validate --file .env \
 - `run` orchestrates env + seed across multiple projects with `--concurrency`.
 
 ```bash
-opendeploy run --all --env preview --sync-env --concurrency 3 --json
+opd run --all --env preview --sync-env --concurrency 3 --json
 ```
 
 ## CI at a Glance
@@ -105,10 +106,10 @@ opendeploy run --all --env preview --sync-env --concurrency 3 --json
 
 ## Promote & Rollback
 
-- Vercel promote: `opendeploy promote vercel --alias <prod-domain> [--from <preview-url-or-sha>]`
-- Netlify promote: `opendeploy promote netlify --project <SITE_ID> [--from <deployId>]`
-- Vercel rollback: `opendeploy rollback vercel --alias <prod-domain> [--to <url|sha>]`
-- Netlify rollback: `opendeploy rollback netlify --project <SITE_ID>`
+- Vercel promote: `opd promote vercel --alias <prod-domain> [--from <preview-url-or-sha>]`
+- Netlify promote: `opd promote netlify --project <SITE_ID> [--from <deployId>]`
+- Vercel rollback: `opd rollback vercel --alias <prod-domain> [--to <url|sha>]`
+- Netlify rollback: `opd rollback netlify --project <SITE_ID>`
 
 Notes:
 

@@ -5,7 +5,7 @@ Sync variables from a .env file to provider environments.
 
 Usage (Vercel):
 ```bash
-opendeploy env sync vercel --file <path> --env <prod|preview|development|all> \
+opd env sync vercel --file <path> --env <prod|preview|development|all> \
   [--yes] [--dry-run] [--json] [--ci] \
   [--project-id <id>] [--org-id <id>] \
   [--ignore <glob,glob>] [--only <glob,glob>] \
@@ -15,7 +15,7 @@ opendeploy env sync vercel --file <path> --env <prod|preview|development|all> \
 ```
 Usage (Netlify):
 ```bash
-opendeploy env sync netlify --file <path> \
+opd env sync netlify --file <path> \
   [--yes] [--dry-run] [--json] [--ci] \
   [--project-id <siteId>] \
   [--ignore <glob,glob>] [--only <glob,glob>]
@@ -42,11 +42,11 @@ Supported transforms: `base64`, `trim`, `upper`, `lower`.
 Examples:
 ```bash
 # Rename and base64 a secret before syncing to Vercel
-opendeploy env sync vercel --file .env --env preview \
+opd env sync vercel --file .env --env preview \
   --map ./env.map.json --optimize-writes --yes
 
 # Apply same mapping on Netlify
-opendeploy env sync netlify --file .env \
+opd env sync netlify --file .env \
   --map ./env.map.json --yes
 ```
 
@@ -55,11 +55,11 @@ Pull provider environment variables into a local .env file.
 
 Usage (Vercel):
 ```bash
-opendeploy env pull vercel --env <prod|preview|development> [--out <path>] [--json] [--ci] [--project-id <id>] [--org-id <id>]
+opd env pull vercel --env <prod|preview|development> [--out <path>] [--json] [--ci] [--project-id <id>] [--org-id <id>]
 ```
 Usage (Netlify):
 ```bash
-opendeploy env pull netlify [--out <path>] [--json] [--project-id <siteId>] [--context <ctx>]
+opd env pull netlify [--out <path>] [--json] [--project-id <siteId>] [--context <ctx>]
 ```
 Behavior:
 - Defaults output file based on env: `.env.production.local`, `.env.preview.local`, or `.env.local`.
@@ -68,17 +68,17 @@ Behavior:
 ### Examples
 - Include only public keys and the DB URL when syncing to preview:
 ```bash
-opendeploy env sync vercel --file .env.local --env preview \
+opd env sync vercel --file .env.local --env preview \
   --only NEXT_PUBLIC_*,DATABASE_URL --yes
 ```
 - Ignore public keys and fail if remote is missing any required secrets (CI guard):
 ```bash
-opendeploy env diff vercel --file .env.production.local --env prod \
+opd env diff vercel --file .env.production.local --env prod \
   --ignore NEXT_PUBLIC_* --fail-on-remove --json --ci
 ```
 - Fail if local introduces unexpected new keys (e.g., drift):
 ```bash
-opendeploy env diff vercel --file .env.production.local --env prod \
+opd env diff vercel --file .env.production.local --env prod \
   --fail-on-add --json --ci
 ```
 
@@ -87,14 +87,14 @@ Compare local `.env` values to remote provider environment (no changes made).
 
 Usage (Vercel):
 ```bash
-opendeploy env diff vercel --file <path> --env <prod|preview|development> \
+opd env diff vercel --file <path> --env <prod|preview|development> \
   [--json] [--ci] [--project-id <id>] [--org-id <id>] \
   [--ignore <glob,glob>] [--only <glob,glob>] \
   [--fail-on-add] [--fail-on-remove]
 ```
 Usage (Netlify):
 ```bash
-opendeploy env diff netlify --file <path> \
+opd env diff netlify --file <path> \
   [--json] [--ci] [--project-id <siteId>] [--context <ctx>] \
   [--ignore <glob,glob>] [--only <glob,glob>] \
   [--fail-on-add] [--fail-on-remove]
@@ -106,21 +106,21 @@ Validate a local `.env` against a schema of required keys. Supports three schema
 Usage:
 ```bash
 # keys schema (required keys only)
-opendeploy env validate \
+opd env validate \
   --file .env \
   --schema builtin:better-auth,builtin:email-basic \
   --schema-type keys \
   --json --ci
 
 # rules schema (regex/allowed/oneOf/requireIf)
-opendeploy env validate \
+opd env validate \
   --file .env \
   --schema ./schemas/production.rules.json \
   --schema-type rules \
   --json --ci
 
 # jsonschema (required: ["KEY"]) 
-opendeploy env validate \
+opd env validate \
   --file .env \
   --schema ./schemas/required.json \
   --schema-type jsonschema \
@@ -129,7 +129,7 @@ opendeploy env validate \
 Profiles (composed builtins):
 ```bash
 # Blogkit preset
-opendeploy env validate --file .env --schema builtin:blogkit --schema-type keys --json --ci
+opd env validate --file .env --schema builtin:blogkit --schema-type keys --json --ci
 # Ecommercekit preset
-opendeploy env validate --file .env --schema builtin:ecommercekit --schema-type keys --json --ci
+opd env validate --file .env --schema builtin:ecommercekit --schema-type keys --json --ci
 ```

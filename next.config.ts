@@ -13,9 +13,7 @@ const basePath = process.env.NEXT_BASE_PATH?.trim() ?? "";
 
 const nextConfig: NextConfig = {
   pageExtensions: ["ts", "tsx", "md", "mdx"],
-  // Enable static export so we can deploy to GitHub Pages easily
-  output: "export",
-  // Allow optional basePath when publishing under a repository subpath
+  // Vercel build: use standard Next output (SSR/SSG); for GitHub Pages, set NEXT_BASE_PATH and use `next export` separately
   ...(basePath
     ? {
         basePath,
