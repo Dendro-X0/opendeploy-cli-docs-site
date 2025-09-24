@@ -40,7 +40,20 @@ jobs:
       - name: Build (Next.js static export)
         env:
           NEXT_BASE_PATH: /${{ github.event.repository.name }}
+          NEXT_EXPORT: '1'
         run: pnpm build
+
+      - name: Export (fallback if out/ missing)
+        env:
+          NEXT_BASE_PATH: /${{ github.event.repository.name }}
+          NEXT_EXPORT: '1'
+        run: |
+          if [ ! -d out ]; then
+            pnpm exec next export -o out
+          fi
+
+      - name: Add .nojekyll
+        run: echo > out/.nojekyll
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
