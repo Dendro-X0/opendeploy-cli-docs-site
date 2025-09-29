@@ -25,6 +25,86 @@ Notes:
 - Non‑interactive usage is supported with flags.
 - Defaults: When confirmed, the wizard stores your selections under `startDefaults` in the root `opendeploy.config.json`. To clear, delete the file or remove the `startDefaults` property. Use `--no-save-defaults` to suppress the save prompt.
 
+### Start wizard summary fields (JSON)
+
+When `--json` (or `--ndjson`) is enabled, the final summary line includes at least:
+
+```json
+{
+  "ok": true,
+  "action": "start",
+  "provider": "<vercel|netlify|cloudflare|github>",
+  "target": "<prod|preview>",
+  "mode": "deploy" | "prepare-only" | "workflow-only",
+  "url": "<deployment or site URL, if available>",
+  "logsUrl": "<dashboard/inspect URL, if available>",
+  "final": true
+}
+```
+
+Provider examples:
+
+- Vercel (preview deploy):
+
+```json
+{
+  "ok": true,
+  "action": "start",
+  "provider": "vercel",
+  "target": "preview",
+  "mode": "deploy",
+  "url": "https://my-app-abc.vercel.app",
+  "logsUrl": "https://vercel.com/acme/my-app/inspect/dep_123",
+  "final": true
+}
+```
+
+- Netlify (prepare-only by default):
+
+```json
+{
+  "ok": true,
+  "action": "start",
+  "provider": "netlify",
+  "target": "prod",
+  "mode": "prepare-only",
+  "logsUrl": "https://app.netlify.com/sites/my-site/deploys",
+  "final": true
+}
+```
+
+If `--deploy` is used, `mode` becomes `deploy` and `url` is included when available.
+
+- Cloudflare Pages (deploy):
+
+```json
+{
+  "ok": true,
+  "action": "start",
+  "provider": "cloudflare",
+  "target": "preview",
+  "mode": "deploy",
+  "url": "https://my-app.pages.dev",
+  "logsUrl": "https://dash.cloudflare.com/?to=/:account/pages/view/my-app",
+  "final": true
+}
+```
+
+- GitHub Pages (Actions workflow-only):
+
+```json
+{
+  "ok": true,
+  "action": "start",
+  "provider": "github",
+  "target": "prod",
+  "mode": "workflow-only",
+  "workflowPath": ".github/workflows/deploy-pages.yml",
+  "actionsUrl": "https://github.com/<owner>/<repo>/actions/workflows/deploy-pages.yml",
+  "final": true
+}
+```
+
 ## detect
 Detect a Next.js app and its configuration.
 

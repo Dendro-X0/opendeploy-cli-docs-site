@@ -37,7 +37,7 @@ jobs:
 
       - name: Build (Next 15 static export)
         env:
-          NEXT_PUBLIC_SITE_ORIGIN: https://dendro-x0.github.io
+          NEXT_PUBLIC_SITE_ORIGIN: https://Dendro-X0.github.io
           NEXT_BASE_PATH: /opendeploy-cli-docs-site
         run: pnpm build
 
