@@ -34,6 +34,19 @@ jobs:
       - name: Install deps
         run: pnpm install --frozen-lockfile
 
+      - name: Sync providers.json from CLI (best-effort)
+        env:
+          OPD_FORCE_CI: '1'
+          CI: '1'
+        run: |
+          mkdir -p public/data
+          # Prefer GitHub source; if it fails, keep the existing file
+          if pnpm dlx github:Dendro-X0/OpenDeploy-CLI opd providers --json > public/data/providers.json; then
+            echo "Synced providers.json from CLI"
+          else
+            echo "CLI unavailable; keeping existing providers.json"
+          fi
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
@@ -41,12 +54,14 @@ jobs:
         env:
           NEXT_BASE_PATH: /${{ github.event.repository.name }}
           NEXT_EXPORT: '1'
+          NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}
         run: pnpm build
 
       - name: Export (fallback if out/ missing)
         env:
           NEXT_BASE_PATH: /${{ github.event.repository.name }}
           NEXT_EXPORT: '1'
+          NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}
         run: |
           if [ ! -d out ]; then
             pnpm exec next export -o out

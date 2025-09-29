@@ -10,28 +10,28 @@ const withMDX = createMDX({
 });
 
 const basePathEnv = process.env.NEXT_BASE_PATH?.trim() ?? ""
-const isExport = process.env.NEXT_EXPORT === "1";
-// Default base path for GitHub Pages project pages when exporting and not explicitly provided
-const autoBasePath = isExport && !basePathEnv
+const siteOriginEnv = (process.env.NEXT_PUBLIC_SITE_ORIGIN ?? '').trim().replace(/\/$/, '')
+// Default base path for GitHub Pages project pages when not explicitly provided
+const autoBasePath = !basePathEnv
   ? `/${String(process.env.npm_package_name ?? '').replace(/^@[^/]+\//, '')}`
   : ''
 const basePath = (basePathEnv || autoBasePath).trim()
 
 const nextConfig: NextConfig = {
   pageExtensions: ["ts", "tsx", "md", "mdx"],
-  // Vercel build: use standard Next output (SSR/SSG)
-  // GitHub Pages: set NEXT_EXPORT=1 and (optionally) NEXT_BASE_PATH=/<repo>
-  ...(isExport
-    ? {
-        output: "export",
-        images: { unoptimized: true },
-        trailingSlash: true,
-      }
-    : {}),
+  // Always export static output (Next 15): next build creates ./out
+  output: "export",
+  images: { unoptimized: true },
+  trailingSlash: true,
+  // Expose basePath to client so components can prefix static assets reliably on GitHub Pages
+  env: {
+    NEXT_PUBLIC_BASE_PATH: basePath,
+  },
   ...(basePath
     ? {
         basePath,
-        assetPrefix: basePath,
+        // Use an absolute asset prefix when a public site origin is provided (e.g., https://<owner>.github.io)
+        assetPrefix: siteOriginEnv ? `${siteOriginEnv}${basePath}` : basePath,
       }
     : {}),
 };

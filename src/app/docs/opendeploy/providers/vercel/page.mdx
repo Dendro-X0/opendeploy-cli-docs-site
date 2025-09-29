@@ -1,0 +1,83 @@
+import { DocsLayout } from "@/components/layout/docs/docs-layout"
+import { ProviderCapabilities } from "@/components/docs/provider-capabilities"
+
+export const metadata = { title: "Deploy to Vercel" }
+
+<DocsLayout showTableOfContents={true}>
+  <article className="prose prose-gray dark:prose-invert max-w-none">
+
+<a id="top" />
+
+# Deploy to Vercel
+
+This guide covers deploying with the OpenDeploy CLI to Vercel.
+
+<ProviderCapabilities provider="vercel" />
+
+<a id="prerequisites" />
+## Prerequisites
+- Vercel account and access to the target project/organization
+- `VERCEL_TOKEN` set in your environment (CI recommended)
+- Your app builds locally and produces the expected output
+
+<a id="quick-start" />
+## Quick start
+```bash
+# Dry‑run plan (JSON summary only)
+opd plan vercel --json --path .
+
+# Deploy (streams logs)
+opd deploy vercel --path .
+```
+
+<a id="environments" />
+## Environments
+- `--env preview` (default) for branch previews
+- `--env production` for a production deployment
+
+<a id="linking-config" />
+## Linking and config
+- If not already linked, the CLI will guide you or infer settings.
+- Generate a baseline config when needed:
+```bash
+opd config vercel --write --path .
+```
+
+<a id="nextjs" />
+## Next.js example (SSR or static)
+```bash
+# Preview deploy (linked project)
+opd deploy vercel --env preview --path apps/web
+
+# Production deploy
+opd deploy vercel --env production --path apps/web
+```
+- For static export, ensure `output: "export"`, `images.unoptimized`, and set `basePath` if deploying under a subpath.
+- For SSR, standard Next.js runtime on Vercel works out of the box.
+
+<a id="astro" />
+## Astro example (static)
+```bash
+# Generate config if needed
+opd config vercel --write --path .
+
+# Deploy
+opd deploy vercel --path .
+```
+Ensure your Astro config outputs a static site and the `dist` is correctly detected.
+
+<a id="ci" />
+## CI usage
+```bash
+opd plan vercel --env production --json --path . > plan.json
+opd deploy vercel --env production --path .
+```
+
+<a id="troubleshooting" />
+## Troubleshooting
+- Auth prompts in CI: set `VERCEL_TOKEN` and run with `--json`/`--ndjson` for clean logs.
+- Link issues on monorepos: pass `--path` to target the app workspace (e.g., `apps/web`).
+- Build timeouts: use the CLI `--timeout` flag or adjust provider settings.
+
+</article>
+</DocsLayout>

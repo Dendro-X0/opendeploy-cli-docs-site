@@ -30,11 +30,14 @@ const BADGE_BG: Record<BadgeVariant, string> = {
 } as const
 
 export function LogoWithBadge({ alt, lightSrc, darkSrc, width, height, badge, badgeVariant = "yellow", className }: LogoWithBadgeProps): React.ReactElement {
+  const base: string = (process.env.NEXT_PUBLIC_BASE_PATH || '').trim()
+  const light: string = `${base}${lightSrc}`
+  const dark: string = `${base}${darkSrc}`
   const textColor: string = badgeVariant === "yellow" ? "text-black" : "text-white"
   return (
     <div className={`relative ${className ?? ""}`} style={{ width: `${width}px`, height: `${height}px` }} aria-label={alt}>
-      <Image src={lightSrc} alt={alt} fill className="object-contain dark:hidden" sizes={`${width}px`} />
-      <Image src={darkSrc} alt={alt} fill className="hidden object-contain dark:block" sizes={`${width}px`} />
+      <Image src={light} alt={alt} fill className="object-contain dark:hidden" sizes={`${width}px`} />
+      <Image src={dark} alt={alt} fill className="hidden object-contain dark:block" sizes={`${width}px`} />
       {badge ? (
         <span className={`absolute -top-2 -right-3 rounded-full px-2 py-0.5 text-[10px] font-semibold shadow ${BADGE_BG[badgeVariant]} ${textColor}`}>
           {badge}

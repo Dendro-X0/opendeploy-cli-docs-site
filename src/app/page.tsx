@@ -3,7 +3,7 @@ import { HomeLayout } from "@/components/layout/home/home-layout"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Code, Zap, Star, Rocket, Package, Terminal, Palette, Settings } from "lucide-react"
+import { ArrowRight, Code, Zap, Star, Rocket, Package, Terminal, Palette, Settings, MessageSquare } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
@@ -26,14 +26,18 @@ interface LogoProps {
  * across different aspect ratios. Automatically swaps light/dark variants.
  */
 const Logo: React.FC<LogoProps> = ({ alt, lightSrc, darkSrc, width, height, className }) => {
+  // Prefix with base path so images resolve on GitHub Pages subpaths
+  const base: string = (process.env.NEXT_PUBLIC_BASE_PATH || '').trim()
+  const light: string = `${base}${lightSrc}`
+  const dark: string = `${base}${darkSrc}`
   return (
     <div
       className={cn("relative", className)}
       style={{ width: `${width}px`, height: `${height}px` }}
       aria-label={alt}
     >
-      <Image src={lightSrc} alt={alt} fill className="object-contain dark:hidden" sizes={`${width}px`} />
-      <Image src={darkSrc} alt={alt} fill className="hidden object-contain dark:block" sizes={`${width}px`} />
+      <Image src={light} alt={alt} fill className="object-contain dark:hidden" sizes={`${width}px`} unoptimized priority />
+      <Image src={dark} alt={alt} fill className="hidden object-contain dark:block" sizes={`${width}px`} unoptimized priority />
     </div>
   )
 }
@@ -55,7 +59,7 @@ export default function HomePage() {
           </h1>
           <p className="text-xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed">
             A Next.js‑first CLI that makes it easy to configure, sync env, and deploy modern web frameworks—
-            including Astro, SvelteKit, Nuxt, and Remix (beta)—to Vercel and Netlify.
+            including Astro, SvelteKit, Nuxt, and Remix (beta)—to Vercel, Netlify, Cloudflare Pages, and GitHub Pages.
             Designed for speed, clarity, and CI‑friendly JSON/NDJSON.
           </p>
           <div className="flex gap-4 justify-center flex-wrap mb-16">
@@ -185,7 +189,7 @@ export default function HomePage() {
                 </div>
                 <CardTitle className="text-xl mb-2">Output Modes</CardTitle>
                 <CardDescription className="text-base leading-relaxed">
-                  `--quiet`, `--no-emoji`, `--compact-json`, `--json`, `--ndjson`, `--timestamps`, and `--summary-only`.
+                  `--json`, `--ndjson`, `--summary-only`, `--timestamps`, `--quiet`, `--no-emoji`, plus `--verbose`, `--color`, `--json-file`, `--ndjson-file`, `--gha`.
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -201,7 +205,7 @@ export default function HomePage() {
             <div className="flex items-center justify-center gap-10 flex-wrap mb-6">
               <Logo alt="Next.js" lightSrc="/logo/Next.js_wordmark_light.svg" darkSrc="/logo/Next.js_wordmark_dark.svg" width={140} height={40} />
               <Logo alt="Astro" lightSrc="/logo/Astro_light.svg" darkSrc="/logo/Astro_dark.svg" width={140} height={40} />
-              <Logo alt="Svelte" lightSrc="/logo/svelte.svg" darkSrc="/logo/svelte.svg" width={140} height={40} />
+              <Logo alt="SvelteKit" lightSrc="/logo/svelte.svg" darkSrc="/logo/svelte.svg" width={140} height={40} />
               <Logo alt="Nuxt" lightSrc="/logo/Nuxt_wordmark_light.svg" darkSrc="/logo/Nuxt_wordmark_dark.svg" width={140} height={40} />
               <LogoWithBadge alt="Remix" lightSrc="/logo/Remix_wordmark_light.svg" darkSrc="/logo/Remix_wordmark_dark.svg" width={140} height={40} badge="Beta" badgeVariant="yellow" />
             </div>
@@ -213,6 +217,8 @@ export default function HomePage() {
             <div className="flex items-center justify-center gap-10 flex-wrap">
               <Logo alt="Vercel" lightSrc="/logo/Vercel_wordmark_light.svg" darkSrc="/logo/Vercel_wordmark_dark.svg" width={140} height={40} />
               <Logo alt="Netlify" lightSrc="/logo/netlify.svg" darkSrc="/logo/netlify.svg" width={140} height={40} />
+              <Logo alt="Cloudflare Pages" lightSrc="/logo/cloudflare.svg" darkSrc="/logo/cloudflare.svg" width={140} height={40} />
+              <Logo alt="GitHub Pages" lightSrc="/logo/GitHub_light.svg" darkSrc="/logo/GitHub_dark.svg" width={140} height={40} />
             </div>
           </div>
         </section>
@@ -239,7 +245,7 @@ export default function HomePage() {
               <Button asChild size="lg" className="h-14 px-8 text-base">
                 <Link href="https://github.com/Dendro-X0/OpenDeploy-CLI/issues">
                   Feedback
-                  <Rocket className="ml-2 h-5 w-5" />
+                  <MessageSquare className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
               <Button variant="outline" size="lg" className="h-14 px-8 text-base bg-transparent" asChild>

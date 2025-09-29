@@ -12,7 +12,7 @@ The 1.0.0 Beta milestone is complete (provider parity, CI ergonomics, extensibil
 - Upgrades for CI ergonomics: `--gha` preset, default JSON/NDJSON sinks, GitHub annotations, deterministic final summaries (`final: true`)
 - `up` command with NDJSON progress streaming and retries/timeouts knobs
 - Env validation with rules schema (regex/allowed/oneOf/requireIf) and profile builtins (blogkit, ecommercekit)
-- Promote and rollback commands; logs/open routed through provider adapters
+- Promote and rollback commands; logs/open routed through provider plugins
 - Secure redaction across human logs, JSON/NDJSON, and file sinks
 
 ## Key Features
@@ -129,3 +129,10 @@ Fine‑tune provider subprocess calls:
 - Commands reference: `docs/commands.md`
 - Troubleshooting (error codes and remedies): `docs/troubleshooting.md`
 - CI and usage recipes: `docs/recipes.md`
+ - Schemas & Validation: `docs/schemas.md`
+ - CI Guide (strict schema + matrix): `docs/ci.md`
+ - Local Test Matrix: `docs/test-matrix.md`
+
+## For Contributors
+
+- Migration from adapters/shims to provider plugins: `docs/migration-notes.md`

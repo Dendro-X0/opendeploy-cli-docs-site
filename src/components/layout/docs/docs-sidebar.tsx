@@ -2,7 +2,7 @@
 
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Badge } from "@/components/ui/badge"
-import { Code, FileText, Home, Rocket, Terminal, ChevronDown, ChevronRight } from "lucide-react"
+import { Code, FileText, Home, Rocket, Terminal, ChevronDown, ChevronRight, Cloud } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
@@ -37,9 +37,18 @@ const navigationItems: ReadonlyArray<NavItem> = [
       { title: "Environment", url: "/docs/opendeploy/commands/environment" },
       { title: "Deploy", url: "/docs/opendeploy/commands/deploy" },
       { title: "System", url: "/docs/opendeploy/commands/system" },
-      { title: "Providers", url: "/docs/opendeploy/providers" },
       { title: "CI Recipes", url: "/docs/opendeploy/ci" },
       { title: "Troubleshooting", url: "/docs/opendeploy/troubleshooting" },
+    ],
+  },
+  {
+    title: "Providers",
+    icon: Cloud,
+    items: [
+      { title: "Vercel", url: "/docs/opendeploy/providers/vercel" },
+      { title: "Netlify", url: "/docs/opendeploy/providers/netlify" },
+      { title: "Cloudflare Pages", url: "/docs/opendeploy/providers/cloudflare" },
+      { title: "GitHub Pages", url: "/docs/opendeploy/providers/github" },
     ],
   },
 ]
@@ -65,7 +74,7 @@ export function DocsSidebar({ onItemClick }: DocsSidebarProps) {
         }
       } catch {}
     }
-    return ["Getting Started", "CLI"]
+    return ["Getting Started", "CLI", "Providers"]
   })
   useEffect(() => { try { window.localStorage.setItem(STORAGE_KEY, JSON.stringify(expandedSections)) } catch {} }, [expandedSections])
 
