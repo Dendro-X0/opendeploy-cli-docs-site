@@ -65,7 +65,7 @@ export default function HomePage() {
           </p>
           <div className="flex gap-4 justify-center flex-wrap mb-16">
             <Button asChild size="lg" className="h-14 px-8 text-base">
-              <Link href="/docs/opendeploy/overview#quick-start">
+              <Link href="/docs/opendeploy/install">
                 <Rocket className="mr-2 h-5 w-5" />
                 Get Started
               </Link>
