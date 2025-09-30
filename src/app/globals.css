@@ -58,7 +58,8 @@ html[data-mobile-safe] body {
 html[data-mobile-safe] * {
   max-width: 100% !important;
 }
-html[data-mobile-safe] .sticky {
+/* In safe mode, disable sticky only within main content, keep header sticky */
+html[data-mobile-safe] main .sticky {
   position: static !important;
 }
 html[data-mobile-safe] .bg-clip-text.text-transparent {

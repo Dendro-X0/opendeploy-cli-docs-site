@@ -22,7 +22,7 @@ export function DocsHeader({ onMenuClick, sidebarOpen }: DocsHeaderProps) {
           <Button
             variant="ghost"
             size="sm"
-            className="hidden"
+            className="lg:hidden"
             onClick={onMenuClick}
             aria-label="Toggle navigation"
             aria-controls="docs-sidebar"
