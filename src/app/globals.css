@@ -43,6 +43,44 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
+/* Layout baseline: prevent border-induced overflow and ensure predictable sizing */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { overflow-x: hidden; }
+
+/* Mobile Safe Mode: conservative rendering to avoid overflow and flaky effects */
+html[data-mobile-safe] {
+  /* Prevent page-level horizontal scroll */
+  overflow-x: hidden;
+}
+html[data-mobile-safe] body {
+  overflow-x: hidden;
+}
+html[data-mobile-safe] * {
+  max-width: 100% !important;
+}
+html[data-mobile-safe] .sticky {
+  position: static !important;
+}
+html[data-mobile-safe] .bg-clip-text.text-transparent {
+  /* Force readable text if gradient rendering fails */
+  -webkit-text-fill-color: currentColor !important;
+  color: var(--foreground) !important;
+  background-image: none !important;
+}
+html[data-mobile-safe] .prose, html[data-mobile-safe] .docs-container > .prose {
+  max-width: 100% !important;
+}
+html[data-mobile-safe] .prose pre,
+html[data-mobile-safe] pre[class*="language-"],
+html[data-mobile-safe] .prose pre > code,
+html[data-mobile-safe] .prose code[class*="language-"] {
+  max-width: 100% !important;
+  overflow-x: auto !important;
+}
+html[data-mobile-safe] table { display: block; width: 100%; overflow-x: auto; }
+html[data-mobile-safe] img, html[data-mobile-safe] video, html[data-mobile-safe] iframe { max-width: 100%; height: auto; }
+html[data-mobile-safe] * { transition: none !important; animation: none !important; }
+
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -228,8 +266,16 @@
   .bg-clip-text.text-transparent {
     -webkit-text-fill-color: transparent;
   }
+  /* Ensure Safari applies text background clipping */
+  .bg-clip-text {
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
   /* Ensure any direct child cannot exceed the container width */
   .docs-container > .prose > * { max-width: 100%; }
+  /* Clamp non-prose wrappers too (e.g. CodeBlock containers with borders) */
+  .docs-container .not-prose { max-width: 100%; }
+  .docs-container .not-prose > * { max-width: 100%; box-sizing: border-box; }
   /* Harden code wrappers from rehype-prism/pretty-code */
   .prose pre[class*="language-"],
   .prose pre > code,

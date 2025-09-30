@@ -22,7 +22,7 @@ export function DocsHeader({ onMenuClick, sidebarOpen }: DocsHeaderProps) {
           <Button
             variant="ghost"
             size="sm"
-            className="lg:hidden"
+            className="hidden"
             onClick={onMenuClick}
             aria-label="Toggle navigation"
             aria-controls="docs-sidebar"
@@ -74,8 +74,8 @@ export function DocsHeader({ onMenuClick, sidebarOpen }: DocsHeaderProps) {
             <Input type="search" aria-label="Search documentation" placeholder="Search documentation..." className="pl-9 h-9" />
           </div>
 
-          {/* Navigation (icons always visible, matches landing header) */}
-          <nav className="flex items-center gap-2" aria-label="Header navigation">
+          {/* Navigation (hidden on mobile to avoid overlap; visible from sm+) */}
+          <nav className="hidden sm:flex items-center gap-2" aria-label="Header navigation">
             <Button variant="ghost" size="sm" asChild>
               <Link href="/docs/opendeploy/overview">
                 <BookOpen className="h-4 w-4" />
