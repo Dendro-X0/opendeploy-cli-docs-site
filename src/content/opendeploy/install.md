@@ -2,24 +2,21 @@
 
 This page describes supported installation methods for the OpenDeploy CLI. The recommended method is GitHub Releases, which gives you the short `opd` command.
 
-## Releases (recommended)
+## Install (recommended)
 
-Install the short command `opd` from the latest GitHub Release.
-
-- macOS/Linux (bash):
-```bash
-curl -fsSL https://raw.githubusercontent.com/Dendro-X0/OpenDeploy-CLI/main/OpenDeploy%20CLI/scripts/install/install.sh | bash
-opd --help
-```
+Until packaged installers are published, the simplest path is to run from Git using a pinned tag.
 
 - Windows (PowerShell):
 ```powershell
-iwr https://raw.githubusercontent.com/Dendro-X0/OpenDeploy-CLI/main/OpenDeploy%20CLI/scripts/install/install.ps1 -UseBasicParsing | iex
-opd --help
+pnpm dlx github:Dendro-X0/OpenDeploy-CLI#v1.1.1 start --help
+```
+
+- macOS/Linux (bash/zsh):
+```bash
+pnpm dlx github:Dendro-X0/OpenDeploy-CLI#v1.1.1 start --help
 ```
 
 Notes:
-- The install script downloads the latest `opd.js`, verifies its checksum when possible, and creates a thin wrapper `opd`/`opd.cmd` on your PATH directory.
 - Requires Node.js 18+ at runtime. If you prefer zero‑Node environments, use the Docker method below.
 
 ## Docker/OCI (no Node required)
@@ -76,13 +73,18 @@ bunx github:Dendro-X0/OpenDeploy-CLI#v1.1.1 start
 
 - Show help:
 ```bash
-opd --help
+opd -h
 ```
 - Run a dry-run plan:
 ```bash
-opd start --provider vercel --env preview --dry-run --json
+opd -s --provider vercel --env preview --dry-run --json
 ```
 - Use NDJSON streaming in CI:
 ```bash
 OPD_NDJSON=1 opd start --provider vercel --env preview --ci
 ```
+
+Shortcuts:
+- `opd -v` — version
+- `opd -h` — help
+- `opd -s` — start wizard (equivalent to `opd start`)

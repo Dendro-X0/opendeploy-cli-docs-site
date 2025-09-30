@@ -59,8 +59,8 @@ export default function HomePage() {
             for Modern Web Apps
           </h1>
           <p className="text-xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed">
-            A Next.js‑first CLI that makes it easy to detect your stack, sync environment variables, and deploy modern web frameworks—
-            including Astro, SvelteKit, Nuxt, and Remix—to Vercel, Netlify, Cloudflare Pages, and GitHub Pages.
+            A CLI for the modern web stack that makes it easy to detect your stack, sync environment variables, and deploy frameworks—
+            including Next.js, Astro, SvelteKit, Nuxt, and Remix—to Vercel, Netlify, Cloudflare Pages, and GitHub Pages.
             100% open source and free. Secrets are redacted in human logs and JSON/NDJSON by default.
           </p>
           <div className="flex gap-4 justify-center flex-wrap mb-16">

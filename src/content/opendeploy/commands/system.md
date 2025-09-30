@@ -1,5 +1,11 @@
 # System Commands
 
+## Shortcuts
+
+- `opd -v` — version (alias of `--version`)
+- `opd -h` — help (alias of `--help`)
+- `opd -s` — start wizard (equivalent to `opd start`)
+
 ## start
 Guided wizard for selecting framework, provider, environment, optional env sync, and deploying.
 
