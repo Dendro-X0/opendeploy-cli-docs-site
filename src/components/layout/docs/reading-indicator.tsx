@@ -23,6 +23,7 @@ export function ReadingIndicator({ contentRef, className }: ReadingIndicatorProp
   const [activeId, setActiveId] = useState<string>("")
   const [progress, setProgress] = useState<number>(0)
   const observerRef = useRef<IntersectionObserver | null>(null)
+  const asideScrollRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     const el = contentRef.current
@@ -90,22 +91,38 @@ export function ReadingIndicator({ contentRef, className }: ReadingIndicatorProp
 
   const items = useMemo(() => headings, [headings])
 
+  // Intentionally do not auto-scroll the right rail; sticky container keeps it visible.
+
   if (items.length === 0) return null
 
   return (
-    <aside className={cn("hidden lg:block w-64 flex-shrink-0", className)}>
-      <div className="sticky top-24">
+    <aside className={cn("hidden lg:block w-64 flex-shrink-0", className)} aria-label="On this page">
+      <div ref={asideScrollRef} className="sticky top-24 max-h-[calc(100vh-7rem)] overflow-auto pr-2">
         {/* Progress bar */}
         <div className="mb-4">
-          <div className="h-1.5 w-full rounded-full bg-border overflow-hidden">
-            <div className="h-full bg-primary transition-all" style={{ width: `${progress}%` }} />
+          <div className="h-1.5 w-full rounded-full bg-border overflow-hidden" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(progress)} aria-label="Reading progress">
+            <div className="h-full bg-primary transition-[width] ease-linear duration-200" style={{ width: `${progress}%` }} />
           </div>
         </div>
 
         {/* Outline */}
         <div className="border-l border-border pl-6">
           <h4 className="font-semibold text-sm mb-4 text-muted-foreground uppercase tracking-wide">On This Page</h4>
-          <nav className="space-y-2">
+          <nav
+            className="space-y-2"
+            aria-label="Section links"
+            onKeyDown={(e) => {
+              const target = e.target as HTMLElement
+              if (target.tagName !== 'A') return
+              const links = Array.from((e.currentTarget as HTMLElement).querySelectorAll<HTMLAnchorElement>('a'))
+              const ix = links.indexOf(target as HTMLAnchorElement)
+              if (e.key === 'ArrowDown' && ix > -1) {
+                e.preventDefault(); const next = links[ix + 1] ?? links[0]; next.focus()
+              } else if (e.key === 'ArrowUp' && ix > -1) {
+                e.preventDefault(); const prev = links[ix - 1] ?? links[links.length - 1]; prev.focus()
+              }
+            }}
+          >
             {items.map((item) => (
               <a
                 key={item.id}
@@ -117,6 +134,17 @@ export function ReadingIndicator({ contentRef, className }: ReadingIndicatorProp
                   item.level === 4 && "pl-9 -ml-9",
                   activeId === item.id && "text-foreground border-border",
                 )}
+                aria-current={activeId === item.id ? "true" : undefined}
+                tabIndex={0}
+                onClick={() => {
+                  // After default jump, move focus to the heading for screen readers without forcing scroll
+                  requestAnimationFrame(() => {
+                    const el = document.getElementById(item.id)
+                    if (!el) return
+                    if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '-1')
+                    ;(el as HTMLElement).focus({ preventScroll: true })
+                  })
+                }}
               >
                 {item.title}
               </a>

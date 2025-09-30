@@ -118,8 +118,9 @@
   }
   body {
     @apply bg-background text-foreground;
+    overflow-x: hidden;
   }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; overflow-x: hidden; }
 }
 
 @layer components {
@@ -181,9 +182,14 @@
     padding: 1rem;
     margin-top: 1rem;
     margin-bottom: 1rem; /* tighten vertical rhythm */
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+    box-sizing: border-box;
   }
   .prose pre code {
     line-height: 1.8;
+    white-space: pre; /* keep formatting inside blocks */
   }
   /* Consecutive code blocks should be tighter */
   .prose pre + pre {
@@ -199,7 +205,68 @@
   .prose :where(h1,h2,h3) code {
     font-weight: 600;
   }
+
+  /* Responsive tables and media */
+  .prose table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-collapse: collapse;
+  }
+  .prose img, .prose video, .prose iframe { max-width: 100%; height: auto; }
+  .prose code { word-break: break-word; }
+  .prose p, .prose li { overflow-wrap: anywhere; word-break: break-word; }
+  .prose a { word-break: break-word; overflow-wrap: anywhere; }
+  /* Prevent heading overflow and allow hyphenation on narrow devices */
+  .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    hyphens: auto;
+  }
+  /* Ensure any direct child cannot exceed the container width */
+  .docs-container > .prose > * { max-width: 100%; }
+  /* Harden code wrappers from rehype-prism/pretty-code */
+  .prose pre[class*="language-"],
+  .prose pre > code,
+  .prose code[class*="language-"] {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+  }
 }
+
+@media (max-width: 640px) {
+  .prose { font-size: 1rem; line-height: 1.8; }
+  .prose h1 { font-size: clamp(1.75rem, 4vw + 1rem, 2.25rem); margin: 0.5em 0 0.5em; }
+  .prose h2 { font-size: clamp(1.25rem, 2.5vw + 1rem, 1.75rem); margin: 1em 0 0.6em; }
+  .prose pre { padding: 0.75rem; margin-left: 0; margin-right: 0; }
+  .prose ul, .prose ol { margin-left: 1rem; }
+  .prose blockquote { margin-left: 0; padding-left: 0.75rem; }
+}
+
+/* A11y: Skip link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 8px;
+  z-index: 50;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  box-shadow: 0 1px 2px color-mix(in oklab, black 20%, transparent);
+  transition: top 120ms ease;
+}
+.skip-link:focus {
+  top: 8px;
+  outline: 2px solid var(--ring);
+}
+
+/* Narrower readable column for docs content, but never exceed viewport */
+.docs-container > .prose { max-width: min(100%, 68ch) !important; }
+@media (min-width: 1280px) { .docs-container > .prose { max-width: min(100%, 74ch) !important; } }
+@media (max-width: 640px) { .docs-container > .prose { max-width: min(100%, 60ch) !important; } }
 
 /* Prism line numbers (rehype-prism-plus) */
 pre[class*="language-"] {

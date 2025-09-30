@@ -1,6 +1,6 @@
 # Overview
 
-OpenDeploy CLI is a cross‑provider deployment assistant for the modern web stack. It focuses on reliable, repeatable workflows with great local/CI ergonomics. In addition to Next.js, the CLI supports Astro, SvelteKit, Nuxt, and Remix, and deploys to Vercel, Netlify, Cloudflare Pages, and GitHub Pages.
+OpenDeploy CLI is a Next.js‑first, cross‑provider deployment assistant for Vercel and Netlify. It focuses on reliable, repeatable workflows with great local/CI ergonomics. In addition to Next.js, the CLI supports Astro and SvelteKit, with early (beta) support for Remix and Expo.
 
 ## Status
 
