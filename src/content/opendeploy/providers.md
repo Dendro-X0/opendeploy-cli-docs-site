@@ -162,21 +162,8 @@ export class ExampleProvider implements Provider {
 
 - Vercel: the `start` wizard performs the deploy (preview/prod) and prints `url`/`logsUrl`. When `--alias` is provided, the wizard attempts to set an alias after deploy.
 - Netlify: the `start` wizard is prepare‑only by default. It generates a safe `netlify.toml` (uses the provider plugin to apply Next.js runtime/plugin when appropriate) and prints recommended `netlify deploy` commands with inferred `--dir`. Optionally, pass `--deploy` to execute a real deploy (supports `--no-build` to deploy prebuilt artifacts). Summaries include `logsUrl` pointing to the Netlify dashboard.
-- Cloudflare Pages: the `start` wizard deploys and returns both `url` (e.g., `*.pages.dev`) and a best‑effort `logsUrl` (dashboard deep link to the Pages project). If the CLI cannot parse a logs URL from output, it constructs a generic dashboard link using the project name.
-- GitHub Pages: the `start` wizard offers two modes:
-  - GitHub Actions (recommended): writes `.github/workflows/deploy-pages.yml` and exits with a “workflow‑only” summary that includes `workflowPath` and an `actionsUrl` deep link. No local deploy is performed in this mode. Commit and push to trigger a deploy.
-  - Branch publish (gh‑pages): performs a local build and branch publish. A `url` may be printed when the provider returns one. Use this mode only if you explicitly prefer branch‑based Pages deploys.
 
 See `docs/commands.md#start` for details.
-
-### GitHub Pages workflow generator
-
-If you prefer to generate the workflow without running the wizard:
-
-```bash
-opd providers --id github --emit-workflow
-```
-This writes `.github/workflows/deploy-pages.yml` using safe defaults for Next.js static export. You can override base path and site origin via flags (see `opd providers --help`).
 
 ## Contributor Guide: Building a Provider Plugin
 

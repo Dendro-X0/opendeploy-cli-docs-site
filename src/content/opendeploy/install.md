@@ -24,7 +24,7 @@ Notes:
 
 ## Docker/OCI (no Node required)
 
-Use the container image published to GHCR.
+Use the container image published to GHCR (if available for your architecture).
 
 ```bash
 docker run --rm -it \
@@ -61,15 +61,15 @@ Use the GitHub repo as the source (pin to a tag for stability):
 
 - pnpm:
 ```bash
-pnpm dlx github:Dendro-X0/OpenDeploy-CLI#v1.0.0 start
+pnpm dlx github:Dendro-X0/OpenDeploy-CLI#v1.1.1 start
 ```
 - yarn:
 ```bash
-yarn dlx github:Dendro-X0/OpenDeploy-CLI#v1.0.0 start
+yarn dlx github:Dendro-X0/OpenDeploy-CLI#v1.1.1 start
 ```
 - bun:
 ```bash
-bunx github:Dendro-X0/OpenDeploy-CLI#v1.0.0 start
+bunx github:Dendro-X0/OpenDeploy-CLI#v1.1.1 start
 ```
 
 ## Verify

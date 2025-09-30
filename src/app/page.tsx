@@ -50,7 +50,7 @@ export default function HomePage() {
         <section className="text-center py-20 px-4">
           <Badge variant="secondary" className="mb-6 text-sm px-4 py-2">
             <Star className="w-4 h-4 mr-2" />
-            OpenDeploy CLI • Beta
+            OpenDeploy CLI • v1.1.1
           </Badge>
           <h1 className="text-6xl font-bold tracking-tight mb-8 bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 dark:from-gray-100 dark:via-gray-300 dark:to-gray-100 bg-clip-text text-transparent">
             Fast, Friendly Deploys
@@ -58,9 +58,9 @@ export default function HomePage() {
             for Modern Web Apps
           </h1>
           <p className="text-xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed">
-            A Next.js‑first CLI that makes it easy to configure, sync env, and deploy modern web frameworks—
-            including Astro, SvelteKit, Nuxt, and Remix (beta)—to Vercel, Netlify, Cloudflare Pages, and GitHub Pages.
-            Designed for speed, clarity, and CI‑friendly JSON/NDJSON.
+            A Next.js‑first CLI that makes it easy to detect your stack, sync environment variables, and deploy modern web frameworks—
+            including Astro, SvelteKit, Nuxt, and Remix—to Vercel, Netlify, Cloudflare Pages, and GitHub Pages.
+            100% open source and free. Secrets are redacted in human logs and JSON/NDJSON by default.
           </p>
           <div className="flex gap-4 justify-center flex-wrap mb-16">
             <Button asChild size="lg" className="h-14 px-8 text-base">
@@ -89,7 +89,7 @@ export default function HomePage() {
         {/* Video Tutorials */}
         <VideoGallery
           headline="Quick Tutorial Videos"
-          subheadline="Short demos showing the Start wizard, CI/args, and troubleshooting a real project."
+          subheadline="Short demos showing the Start wizard, CI/args, and troubleshooting a real project (coming soon)."
           videos={[
             { title: "60s Quick Deploy (Vercel)", platform: "youtube", id: "dQw4w9WgXcQ", durationSeconds: 60 },
             { title: "CI + JSON/NDJSON", platform: "youtube", id: "dQw4w9WgXcQ", durationSeconds: 90 },
@@ -105,7 +105,7 @@ export default function HomePage() {
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-6">What You Get with OpenDeploy CLI</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              CI‑ready workflows, environment parity, and readable deploy streams across Vercel and Netlify.
+              CI‑ready workflows, environment parity, and readable deploy streams across Vercel, Netlify, Cloudflare Pages, and GitHub Pages.
             </p>
           </div>
 
@@ -223,13 +223,13 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Alpha Status */}
+        {/* Open Source & Security */}
         <section className="py-20 px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Beta v1.0.0</h2>
+            <h2 className="text-3xl font-bold mb-4">Open Source & Security</h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              Web‑focused and fast: config generation, env sync/diff/validate, deploy with readable logs, promote/rollback, and CI ergonomics (<code>--gha</code>, deterministic summaries).
-              Railway is next; Render is a possible future extension.
+              OpenDeploy is permanently open source and free to use. Secrets are never printed: the CLI redacts sensitive values
+              across human logs, JSON/NDJSON, and file sinks. Telemetry is disabled by default. Built for local and CI.
             </p>
           </div>
         </section>
@@ -251,6 +251,11 @@ export default function HomePage() {
               <Button variant="outline" size="lg" className="h-14 px-8 text-base bg-transparent" asChild>
                 <Link href="https://github.com/Dendro-X0/OpenDeploy-CLI" target="_blank">
                   View on GitHub
+                </Link>
+              </Button>
+              <Button variant="outline" size="lg" className="h-14 px-8 text-base bg-transparent" asChild>
+                <Link href="https://github.com/Dendro-X0/OpenDeploy-CLI/releases/tag/v1.1.1" target="_blank">
+                  Release Notes (v1.1.1)
                 </Link>
               </Button>
             </div>

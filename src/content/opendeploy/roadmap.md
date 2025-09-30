@@ -2,22 +2,21 @@
 
 OpenDeploy’s roadmap captures what’s shipping next, near‑term goals for polish, and which providers we plan to add. It mirrors the repository’s `ROADMAP.md` and is kept in sync as we iterate.
 
-> Status: 1.0.0‑beta complete. Netlify and Vercel have full wizard support with valid URLs/logs and deterministic JSON/NDJSON outputs. Phase 2 added first‑class Next.js on Netlify via the official runtime.
+> Status: v1.1.1 (Remastered) released. Vercel, Netlify, Cloudflare Pages, and GitHub Pages are supported in the Start wizard with consistent `url`/`logsUrl` summaries. Next.js on Netlify uses the official runtime.
 
-## Near‑Term (1.0 GA)
+## Near‑Term
 
 - Wizard & Summaries
-  - Add optional fields to the `start` schema: `logsUrl`, `cwd`, `alias`, `siteId`, `siteName`.
-  - Ensure the final `done` NDJSON event always emits (success and failure).
-  - Idle‑timeout defaults in `--ci` with helpful “reason” in summaries.
+  - Maintain parity across providers; ensure `done` NDJSON event always emits (success and failure).
+  - CI defaults: idle‑timeout with helpful `reason` in summaries.
 - Netlify UX Polish (Next.js runtime)
   - Prefer `@netlify/next` runtime; run `netlify build && netlify deploy` (omit `--dir`).
   - Non‑interactive linking: require `--project <SITE_ID>` in machine/CI mode; clear error if missing.
   - Robust URL capture: stream → JSON → API fallback; stable `logsUrl` via `admin_url` (sites/<name>/deploys).
   - Tests for runtime detection, auto‑install prompt, and API fallback.
 - pnpm build‑scripts guidance
-  - Document how to approve build scripts (e.g., `@tailwindcss/oxide`, `esbuild`) to remove the “Ignored build scripts” warning on Vercel.
-  - Add a wizard hint when such warnings are detected.
+  - Document approving build scripts (e.g., `@tailwindcss/oxide`, `esbuild`) to remove the “Ignored build scripts” warning on Vercel.
+  - Keep wizard hints when such warnings are detected.
 - Docs & Distribution
   - Deploy Docs site with `opd start/up`; link prominently in README.
   - Sweep examples to use `opd` alias consistently.
@@ -25,11 +24,11 @@ OpenDeploy’s roadmap captures what’s shipping next, near‑term goals for po
   - Version bump and concise changelog.
   - Smoke pass matrix on real apps: Next, Astro (static), Nuxt (static), and one Remix static.
 
-## 1.1 (2–3 weeks)
+## 1.2 (2–3 weeks)
 
 - Providers
-  - Cloudflare Pages (static export first).
-  - GitHub Pages helper (simplified adapter + `generate gh-pages`).
+  - Cloudflare Pages SSR and logs follow (exploratory).
+  - GitHub Pages enhancements and site origin helpers.
 - Detection & UX
   - React Router v7 detector and SPA redirect heuristics.
   - Monorepo chosen‑cwd advisories (doctor + wizard hints).
@@ -41,8 +40,8 @@ OpenDeploy’s roadmap captures what’s shipping next, near‑term goals for po
 
 - Vercel — Complete (primary).
 - Netlify — Complete (full wizard deploy; Next.js runtime).
-- Cloudflare Pages — Planned (static export first).
-- GitHub Pages — Planned helper flow.
+- Cloudflare Pages — Complete (static export). SSR under exploration.
+- GitHub Pages — Complete (Actions workflow‑only path).
 - Render, Fly.io — Backlog (exploratory adapters).
 
 ## UX & CI Improvements
