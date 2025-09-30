@@ -224,6 +224,10 @@
     word-break: break-word;
     hyphens: auto;
   }
+  /* Safari gradient text reliability */
+  .bg-clip-text.text-transparent {
+    -webkit-text-fill-color: transparent;
+  }
   /* Ensure any direct child cannot exceed the container width */
   .docs-container > .prose > * { max-width: 100%; }
   /* Harden code wrappers from rehype-prism/pretty-code */
