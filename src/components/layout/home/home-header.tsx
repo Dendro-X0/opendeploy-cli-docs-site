@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { ThemeToggleSwitch } from "@/components/theme/ThemeToggleSwitch";
+import VERSION from "@/lib/version";
 // Inline SVG so it inherits currentColor from the container
 
 export function HomeHeader() {
@@ -40,14 +41,16 @@ export function HomeHeader() {
           </div>
           <div className="flex flex-col">
             <span className="font-semibold">OpenDeploy CLI</span>
-            <span className="text-xs text-muted-foreground">v1.0.0-beta</span>
+            <span className="text-xs text-muted-foreground">{VERSION.version}</span>
           </div>
-          <Badge
-            variant="outline"
-            className="hidden sm:inline-flex text-xs ml-2"
-          >
-            Beta
-          </Badge>
+          {VERSION.isBeta && (
+            <Badge
+              variant="outline"
+              className="hidden sm:inline-flex text-xs ml-2"
+            >
+              Beta
+            </Badge>
+          )}
         </Link>
 
         {/* Right side - Navigation */}

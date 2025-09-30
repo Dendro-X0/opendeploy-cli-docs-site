@@ -1,8 +1,7 @@
-name: Deploy Docs (GitHub Pages)
+name: DISABLED - Deploy Docs (GitHub Pages)
 
 on:
-  push:
-    branches: [ main ]
+  # Disabled: keep only manual dispatch if needed
   workflow_dispatch:
 
 permissions:
@@ -16,6 +15,7 @@ concurrency:
 
 jobs:
   build:
+    if: false
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -76,6 +76,7 @@ jobs:
           path: ./out
 
   deploy:
+    if: false
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

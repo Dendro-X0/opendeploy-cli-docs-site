@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import { Search, Github, ExternalLink, Menu, Package, Terminal, BookOpen } from "lucide-react"
 import Link from "next/link"
 import { ThemeToggleSwitch } from "@/components/theme/ThemeToggleSwitch"
+import VERSION from "@/lib/version"
 
 interface DocsHeaderProps {
   onMenuClick?: () => void
@@ -44,13 +45,15 @@ export function DocsHeader({ onMenuClick }: DocsHeaderProps) {
           </div>
             <div className="flex flex-col">
               <span className="font-semibold">OpenDeploy CLI</span>
-              <span className="text-xs text-muted-foreground">v1.0.0-beta</span>
+              <span className="text-xs text-muted-foreground">{VERSION.version}</span>
             </div>
           </Link>
 
-          <Badge variant="outline" className="hidden md:inline-flex text-xs">
-            Beta
-          </Badge>
+          {VERSION.isBeta && (
+            <Badge variant="outline" className="hidden md:inline-flex text-xs">
+              Beta
+            </Badge>
+          )}
         </div>
 
         {/* Right side */}

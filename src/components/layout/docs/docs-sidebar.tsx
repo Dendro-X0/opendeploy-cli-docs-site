@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { useEffect, useState } from "react"
 import type { LucideIcon } from "lucide-react"
+import VERSION from "@/lib/version"
 
 type NavLeaf = { title: string; url: string }
 type NavSubGroup = { title: string; items: readonly NavLeaf[] }
@@ -238,7 +239,7 @@ export function DocsSidebar({ onItemClick }: DocsSidebarProps) {
       {/* Sidebar Footer */}
       <div className="border-t p-4">
         <div className="text-xs text-muted-foreground text-center">
-          <div className="mb-2">v1.0.0-beta</div>
+          <div className="mb-2">{VERSION.version}</div>
           <Link
             href="https://github.com/Dendro-X0/OpenDeploy-CLI"
             className="hover:text-foreground transition-colors"

@@ -11,6 +11,7 @@ import { QuickStart } from "@/components/landing/quick-start"
 import { VideoGallery } from "@/components/landing/video-gallery"
 import { HeroStartCommand } from "@/components/landing/hero-start"
 import { LogoWithBadge } from "@/components/landing/logo-with-badge"
+import VERSION from "@/lib/version"
 
 interface LogoProps {
   alt: string
@@ -50,7 +51,7 @@ export default function HomePage() {
         <section className="text-center py-20 px-4">
           <Badge variant="secondary" className="mb-6 text-sm px-4 py-2">
             <Star className="w-4 h-4 mr-2" />
-            OpenDeploy CLI • v1.1.1
+            OpenDeploy CLI • {VERSION.version}
           </Badge>
           <h1 className="text-6xl font-bold tracking-tight mb-8 bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 dark:from-gray-100 dark:via-gray-300 dark:to-gray-100 bg-clip-text text-transparent">
             Fast, Friendly Deploys
@@ -229,7 +230,10 @@ export default function HomePage() {
             <h2 className="text-3xl font-bold mb-4">Open Source & Security</h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
               OpenDeploy is permanently open source and free to use. Secrets are never printed: the CLI redacts sensitive values
-              across human logs, JSON/NDJSON, and file sinks. Telemetry is disabled by default. Built for local and CI.
+              across human logs, JSON/NDJSON, and file sinks. Telemetry is disabled by default. Built for local and CI. See our
+              {" "}
+              <Link href="/docs/opendeploy/security" className="underline hover:no-underline">Security</Link>
+              {" "} page for details.
             </p>
           </div>
         </section>
@@ -254,8 +258,8 @@ export default function HomePage() {
                 </Link>
               </Button>
               <Button variant="outline" size="lg" className="h-14 px-8 text-base bg-transparent" asChild>
-                <Link href="https://github.com/Dendro-X0/OpenDeploy-CLI/releases/tag/v1.1.1" target="_blank">
-                  Release Notes (v1.1.1)
+                <Link href={`https://github.com/Dendro-X0/OpenDeploy-CLI/releases/tag/${VERSION.version}`} target="_blank">
+                  Release Notes ({VERSION.version})
                 </Link>
               </Button>
             </div>
