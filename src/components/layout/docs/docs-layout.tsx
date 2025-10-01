@@ -2,6 +2,7 @@
 
 import type React from "react"
 import { useEffect, useRef, useState } from "react"
+import { useSearchParams } from "next/navigation"
 import { DocsHeader } from "@/components/layout/docs/docs-header"
 import { DocsSidebar } from "@/components/layout/docs/docs-sidebar"
 import { ReadingIndicator } from "@/components/layout/docs/reading-indicator"
@@ -24,6 +25,9 @@ export function DocsLayout({
 }: DocsLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const contentRef = useRef<HTMLElement | null>(null)
+  const params = useSearchParams()
+  const tocParam = params?.get("toc")
+  const tocEnabled = showTableOfContents && tocParam !== "0"
 
   // Prevent background scroll when the mobile sidebar is open
   useEffect(() => {
@@ -72,8 +76,8 @@ export function DocsLayout({
               {/* Centered content container */}
               <div className={cn(
                 "w-full",
-                showTableOfContents
-                  ? "max-w-4xl xl:max-w-5xl flex gap-6 xl:gap-8"
+                tocEnabled
+                  ? "max-w-4xl xl:max-w-5xl xl:flex xl:gap-8"
                   : "max-w-3xl"
               )}>
                 {/* Main content */}
@@ -81,7 +85,7 @@ export function DocsLayout({
                   ref={contentRef as any}
                   className={cn(
                     "flex-1 min-w-0 docs-container",
-                    showTableOfContents ? "xl:max-w-3xl" : ""
+                    tocEnabled ? "xl:max-w-3xl" : ""
                   )}
                 >
                   {children}
@@ -89,7 +93,7 @@ export function DocsLayout({
                 </div>
 
                 {/* Reading Indicator (right rail) */}
-                {showTableOfContents && (
+                {tocEnabled && (
                   <div className="hidden xl:block">
                     <ReadingIndicator contentRef={contentRef} />
                   </div>

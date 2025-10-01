@@ -96,8 +96,8 @@ export function ReadingIndicator({ contentRef, className }: ReadingIndicatorProp
   if (items.length === 0) return null
 
   return (
-    <aside className={cn("hidden lg:block w-64 flex-shrink-0", className)} aria-label="On this page">
-      <div ref={asideScrollRef} className="sticky top-24 max-h-[calc(100vh-7rem)] overflow-auto pr-2">
+    <aside className={cn("hidden lg:block w-64 flex-shrink-0 overflow-x-hidden", className)} aria-label="On this page">
+      <div ref={asideScrollRef} className="sticky top-24 max-h-[calc(100vh-7rem)] overflow-auto overflow-x-hidden pr-2">
         {/* Progress bar */}
         <div className="mb-4">
           <div className="h-1.5 w-full rounded-full bg-border overflow-hidden" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(progress)} aria-label="Reading progress">
@@ -106,10 +106,10 @@ export function ReadingIndicator({ contentRef, className }: ReadingIndicatorProp
         </div>
 
         {/* Outline */}
-        <div className="border-l border-border pl-6">
+        <div className="border-l border-border pl-6 overflow-x-hidden">
           <h4 className="font-semibold text-sm mb-4 text-muted-foreground uppercase tracking-wide">On This Page</h4>
           <nav
-            className="space-y-2"
+            className="space-y-2 overflow-x-hidden"
             aria-label="Section links"
             onKeyDown={(e) => {
               const target = e.target as HTMLElement
@@ -128,10 +128,10 @@ export function ReadingIndicator({ contentRef, className }: ReadingIndicatorProp
                 key={item.id}
                 href={`#${item.id}`}
                 className={cn(
-                  "block text-sm text-muted-foreground hover:text-foreground transition-colors py-1 border-l-2 border-transparent pl-3 -ml-3",
+                  "block text-sm text-muted-foreground hover:text-foreground transition-colors py-1 border-l-2 border-transparent pl-3",
                   item.level === 2 && "font-medium",
-                  item.level === 3 && "pl-6 -ml-6",
-                  item.level === 4 && "pl-9 -ml-9",
+                  item.level === 3 && "pl-6",
+                  item.level === 4 && "pl-9",
                   activeId === item.id && "text-foreground border-border",
                 )}
                 aria-current={activeId === item.id ? "true" : undefined}

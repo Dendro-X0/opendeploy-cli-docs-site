@@ -50,7 +50,7 @@ export function CodeBlock(props: HTMLAttributes<HTMLPreElement>): ReactElement {
   }
 
   return (
-    <div className="not-prose my-4 rounded-lg border border-border w-full overflow-x-auto overflow-y-hidden">
+    <div className="not-prose my-4 rounded-lg border border-border w-full min-w-0 overflow-x-auto overflow-y-hidden">
       <div className="flex items-center justify-between bg-foreground/5 px-3 py-1.5 border-b border-border">
         <div className="text-[10px] uppercase tracking-wide text-foreground/70">
           {lang ?? "code"}
@@ -77,7 +77,7 @@ export function CodeBlock(props: HTMLAttributes<HTMLPreElement>): ReactElement {
       <pre
         ref={preRef}
         {...props}
-        className={cn("m-0 !rounded-none overflow-auto", props.className)}
+        className={cn("m-0 !rounded-none overflow-auto max-w-full", props.className)}
       />
     </div>
   )
