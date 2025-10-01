@@ -43,25 +43,14 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-/* Layout baseline: prevent border-induced overflow and ensure predictable sizing */
-*, *::before, *::after { box-sizing: border-box; }
-html, body { overflow-x: hidden; }
 
-/* Mobile Safe Mode: conservative rendering to avoid overflow and flaky effects */
-html[data-mobile-safe] {
-  /* Prevent page-level horizontal scroll */
-  overflow-x: hidden;
-}
-html[data-mobile-safe] body {
-  overflow-x: hidden;
-}
 html[data-mobile-safe] * {
   max-width: 100% !important;
 }
 /* In safe mode, disable sticky only within main content, keep header sticky */
-html[data-mobile-safe] main .sticky {
+/* html[data-mobile-safe] main .sticky {
   position: static !important;
-}
+} */
 html[data-mobile-safe] .bg-clip-text.text-transparent {
   /* Force readable text if gradient rendering fails */
   -webkit-text-fill-color: currentColor !important;
@@ -157,9 +146,8 @@ html[data-mobile-safe] * { transition: none !important; animation: none !importa
   }
   body {
     @apply bg-background text-foreground;
-    overflow-x: hidden;
   }
-  html { scroll-behavior: smooth; overflow-x: hidden; }
+  html { scroll-behavior: smooth; }
 }
 
 @layer components {

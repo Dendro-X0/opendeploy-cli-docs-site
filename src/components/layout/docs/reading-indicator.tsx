@@ -96,7 +96,7 @@ export function ReadingIndicator({ contentRef, className }: ReadingIndicatorProp
   if (items.length === 0) return null
 
   return (
-    <aside className={cn("hidden lg:block w-64 flex-shrink-0 overflow-x-hidden", className)} aria-label="On this page">
+    <aside className={cn("hidden lg:block w-full flex-shrink-0", className)} aria-label="On this page">
       <div ref={asideScrollRef} className="sticky top-24 max-h-[calc(100vh-7rem)] overflow-auto overflow-x-hidden pr-2">
         {/* Progress bar */}
         <div className="mb-4">

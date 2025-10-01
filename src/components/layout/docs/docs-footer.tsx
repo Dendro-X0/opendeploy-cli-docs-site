@@ -9,10 +9,7 @@ export function DocsFooter() {
           {/* Left side - Project info */}
           <div className="flex items-center gap-4">
             <div className="text-sm text-muted-foreground">
-              © 2025 OpenDeploy CLI Docs. Built with{" "}
-              <Link href="https://nextjs.org" className="hover:text-foreground transition-colors">
-                Next.js
-              </Link>
+              © 2025 OpenDeploy CLI.
             </div>
           </div>
 

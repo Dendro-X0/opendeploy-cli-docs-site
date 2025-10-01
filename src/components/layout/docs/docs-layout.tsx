@@ -40,7 +40,7 @@ export function DocsLayout({
   }, [sidebarOpen])
 
   return (
-    <div className="min-h-screen bg-background flex flex-col overflow-x-hidden">
+    <div className="min-h-screen bg-background flex flex-col">
       <SkipLink />
       <DocsHeader onMenuClick={() => setSidebarOpen(!sidebarOpen)} sidebarOpen={sidebarOpen} />
 
@@ -48,43 +48,44 @@ export function DocsLayout({
         {/* Fixed Sidebar */}
         {showSidebar && (
           <>
-            {/* Mobile sidebar overlay */}
-            {sidebarOpen && (
-              <div className="fixed inset-0 z-40 bg-black/60 lg:hidden" role="presentation" aria-hidden onClick={() => setSidebarOpen(false)} />
-            )}
-
-            {/* Sidebar */}
-            <aside
-              className={cn(
-                "fixed top-16 left-0 z-50 h-[calc(100vh-4rem)] w-64 sm:w-72 transform border-r bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/95 transition-transform duration-200 ease-in-out lg:translate-x-0 lg:z-30",
-                sidebarOpen ? "translate-x-0" : "-translate-x-full",
-              )}
-              id="docs-sidebar"
+            {/* Mobile off-canvas (render only when open, within a clipping container) */}
+            <div
+              className={cn("fixed inset-0 z-50 lg:hidden", sidebarOpen ? "block" : "hidden")}
+              role="dialog"
+              aria-modal="true"
             >
-              <DocsSidebar onItemClick={() => setSidebarOpen(false)} />
-            </aside>
+              <div className="absolute inset-0 bg-black/60" role="presentation" aria-hidden onClick={() => setSidebarOpen(false)} />
+              <aside
+                className="absolute top-16 left-0 h-[calc(100vh-4rem)] w-64 sm:w-72 border-r bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/95"
+                id="docs-sidebar"
+              >
+                <DocsSidebar onItemClick={() => setSidebarOpen(false)} />
+              </aside>
+            </div>
 
-            {/* Sidebar spacer for desktop */}
-            <div className="hidden lg:block w-64 sm:w-72 flex-shrink-0" />
+            {/* Desktop sidebar (participates in layout width) */}
+            <aside className="hidden lg:sticky lg:top-16 lg:z-30 lg:block lg:h-[calc(100vh-4rem)] lg:w-72 lg:flex-shrink-0 lg:border-r">
+              <DocsSidebar />
+            </aside>
           </>
         )}
 
         {/* Main content area */}
         <main className="flex-1 min-w-0 flex flex-col" id="main-content" role="main" aria-hidden={sidebarOpen ? true : undefined}>
-          <div className="flex-1 mx-auto px-4 sm:px-6 py-8 pb-16 overflow-x-hidden">
-            <div className="flex justify-center">
+          <div className="flex-1 min-w-0 max-w-full mx-auto px-4 sm:px-6 py-8 pb-16">
+            <div className="flex justify-center min-w-0 max-w-full">
               {/* Centered content container */}
               <div className={cn(
-                "w-full",
+                "w-full min-w-0 max-w-full",
                 tocEnabled
-                  ? "max-w-4xl xl:max-w-5xl xl:flex xl:gap-8"
-                  : "max-w-3xl"
+                  ? "sm:max-w-4xl xl:max-w-5xl xl:flex xl:gap-8"
+                  : "sm:max-w-3xl"
               )}>
                 {/* Main content */}
                 <div
                   ref={contentRef as any}
                   className={cn(
-                    "flex-1 min-w-0 docs-container",
+                    "flex-1 min-w-0 max-w-full docs-container",
                     tocEnabled ? "xl:max-w-3xl" : ""
                   )}
                 >
