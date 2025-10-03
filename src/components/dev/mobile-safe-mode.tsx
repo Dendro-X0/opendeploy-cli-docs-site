@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, type ReactElement } from "react"
-import { useSearchParams } from "next/navigation"
 
 /**
  * MobileSafeMode
@@ -13,17 +12,28 @@ import { useSearchParams } from "next/navigation"
  * disable sticky/complex effects, and turn off gradient text if needed.
  */
 export default function MobileSafeMode(): ReactElement | null {
-  const params = useSearchParams()
-  useEffect((): void => {
-    const qp: string | null = params.get("mobile")
-    const env: string | undefined = process.env.NEXT_PUBLIC_MOBILE_SAFE_MODE
-    const enable: boolean = qp === "safe" || env === "1"
-    const root: HTMLElement = document.documentElement
-    if (enable) {
-      root.setAttribute("data-mobile-safe", "1")
-    } else {
-      root.removeAttribute("data-mobile-safe")
+  useEffect((): void | (() => void) => {
+    const apply = (): void => {
+      try {
+        const sp = new URLSearchParams(window.location.search)
+        const qp = sp.get("mobile")
+        const env: string | undefined = process.env.NEXT_PUBLIC_MOBILE_SAFE_MODE
+        const enable: boolean = qp === "safe" || env === "1"
+        const root: HTMLElement = document.documentElement
+        if (enable) root.setAttribute("data-mobile-safe", "1")
+        else root.removeAttribute("data-mobile-safe")
+      } catch {
+        /* no-op */
+      }
     }
-  }, [params])
+    apply()
+    const onChange = (): void => apply()
+    window.addEventListener("popstate", onChange)
+    window.addEventListener("hashchange", onChange)
+    return () => {
+      window.removeEventListener("popstate", onChange)
+      window.removeEventListener("hashchange", onChange)
+    }
+  }, [])
   return null
 }

@@ -2,7 +2,6 @@
 
 import type React from "react"
 import { useEffect, useRef, useState } from "react"
-import { useSearchParams } from "next/navigation"
 import { DocsHeader } from "@/components/layout/docs/docs-header"
 import { DocsSidebar } from "@/components/layout/docs/docs-sidebar"
 import { ReadingIndicator } from "@/components/layout/docs/reading-indicator"
@@ -25,9 +24,24 @@ export function DocsLayout({
 }: DocsLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const contentRef = useRef<HTMLElement | null>(null)
-  const params = useSearchParams()
-  const tocParam = params?.get("toc")
-  const tocEnabled = showTableOfContents && tocParam !== "0"
+  const [tocEnabled, setTocEnabled] = useState<boolean>(showTableOfContents)
+
+  // Compute tocEnabled from the URL on the client without useSearchParams to avoid Suspense requirement
+  useEffect((): void | (() => void) => {
+    const compute = (): void => {
+      try {
+        const sp: URLSearchParams = new URLSearchParams(window.location.search)
+        const disabled: boolean = sp.get("toc") === "0"
+        setTocEnabled(showTableOfContents && !disabled)
+      } catch {
+        setTocEnabled(showTableOfContents)
+      }
+    }
+    compute()
+    const onPop = (): void => compute()
+    window.addEventListener("popstate", onPop)
+    return () => window.removeEventListener("popstate", onPop)
+  }, [showTableOfContents])
 
   // Prevent background scroll when the mobile sidebar is open
   useEffect(() => {
