@@ -30,11 +30,7 @@ export function QuickStart(): React.ReactElement {
         { key: "up-netlify", label: "# Preview deploy (Netlify)", code: "opd up netlify --env preview --project <SITE_ID> --ndjson --timestamps" },
       ]
     : [
-        { key: "start", label: "# Start wizard", code: `${x} opendeploy-cli start` },
-        { key: "gen-vercel", label: "# Generate vercel.json", code: `${x} opendeploy-cli start --provider vercel --generate-config-only` },
-        { key: "gen-netlify", label: "# Generate netlify.toml", code: `${x} opendeploy-cli start --provider netlify --generate-config-only` },
-        { key: "up-vercel", label: "# Preview deploy (Vercel)", code: `${x} opendeploy-cli up vercel --env preview --ndjson --timestamps` },
-        { key: "up-netlify", label: "# Preview deploy (Netlify)", code: `${x} opendeploy-cli up netlify --env preview --project <SITE_ID> --ndjson --timestamps` },
+        { key: "coming-soon", label: "# Package manager install (coming soon)", code: "Use Releases binary: opd -h" },
       ]
 
   const all: string = commands.map((c) => `${c.label}\n${c.code}`).join("\n\n") + "\n"
@@ -97,7 +93,9 @@ export function QuickStart(): React.ReactElement {
                 className="h-7 px-2"
                 onClick={() => setMode("manager")}
                 aria-pressed={mode === "manager"}
-              >Package Manager</Button>
+                disabled
+                title="Coming soon"
+              >Package Manager (soon)</Button>
             </div>
           </div>
           {mode === "manager" ? (

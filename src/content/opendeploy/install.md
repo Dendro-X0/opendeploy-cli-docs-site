@@ -4,20 +4,53 @@ This page describes supported installation methods for the OpenDeploy CLI. The r
 
 ## Install (recommended)
 
-Until packaged installers are published, the simplest path is to run from Git using a pinned tag.
+Download a prebuilt binary from GitHub Releases, make it executable, and place it in your PATH.
 
 - Windows (PowerShell):
 ```powershell
-pnpm dlx github:Dendro-X0/OpenDeploy-CLI#v1.1.1 start --help
+$version = "v1.1.1"
+$dest = "$env:USERPROFILE\\bin"
+New-Item -ItemType Directory -Force -Path $dest | Out-Null
+Invoke-WebRequest -Uri "https://github.com/Dendro-X0/OpenDeploy-CLI/releases/download/$version/opd-windows-x64.exe" -OutFile "$dest/opd.exe"
+# Ensure $env:USERPROFILE\bin is on PATH, then:
+opd -h
 ```
 
-- macOS/Linux (bash/zsh):
+- macOS (Apple Silicon):
 ```bash
-pnpm dlx github:Dendro-X0/OpenDeploy-CLI#v1.1.1 start --help
+VERSION=v1.1.1
+curl -L -o opd https://github.com/Dendro-X0/OpenDeploy-CLI/releases/download/$VERSION/opd-darwin-arm64
+chmod +x opd && sudo mv opd /usr/local/bin/opd
+opd -h
+```
+
+- macOS (Intel):
+```bash
+VERSION=v1.1.1
+curl -L -o opd https://github.com/Dendro-X0/OpenDeploy-CLI/releases/download/$VERSION/opd-darwin-x64
+chmod +x opd && sudo mv opd /usr/local/bin/opd
+opd -h
+```
+
+- Linux (x64):
+```bash
+VERSION=v1.1.1
+curl -L -o opd https://github.com/Dendro-X0/OpenDeploy-CLI/releases/download/$VERSION/opd-linux-x64
+chmod +x opd && sudo mv opd /usr/local/bin/opd
+opd -h
+```
+
+- Linux (arm64):
+```bash
+VERSION=v1.1.1
+curl -L -o opd https://github.com/Dendro-X0/OpenDeploy-CLI/releases/download/$VERSION/opd-linux-arm64
+chmod +x opd && sudo mv opd /usr/local/bin/opd
+opd -h
 ```
 
 Notes:
-- Requires Node.js 18+ at runtime. If you prefer zero‑Node environments, use the Docker method below.
+- The binary is self-contained; no Node.js is required.
+- Prefer the Docker method below if you cannot install binaries system-wide.
 
 ## Docker/OCI (no Node required)
 
@@ -33,41 +66,11 @@ Tip: add a tiny shell/pwsh wrapper named `opd` that calls the container so you c
 
 ## Package managers (alternative)
 
-If you prefer a package-manager invocation, use one of the following. These work best when the package is available on a registry; otherwise, use the “Git (dlx)” option.
+Not available yet. We’ll update docs when the package is published to registries. Use GitHub Releases (above) or Docker instead.
 
-- npm (if published):
-```bash
-npx opendeploy-cli start
-```
-- pnpm:
-```bash
-pnpm dlx opendeploy-cli start
-```
-- yarn:
-```bash
-yarn dlx opendeploy-cli start
-```
-- bun:
-```bash
-bunx opendeploy-cli start
-```
+### Git (dlx) — experimental
 
-### Git (dlx) — no registry required
-
-Use the GitHub repo as the source (pin to a tag for stability):
-
-- pnpm:
-```bash
-pnpm dlx github:Dendro-X0/OpenDeploy-CLI#v1.1.1 start
-```
-- yarn:
-```bash
-yarn dlx github:Dendro-X0/OpenDeploy-CLI#v1.1.1 start
-```
-- bun:
-```bash
-bunx github:Dendro-X0/OpenDeploy-CLI#v1.1.1 start
-```
+Running directly from Git is currently not supported for most users. It may work in limited scenarios, but we recommend the Releases binaries above (or Docker). We’ll revisit this path later.
 
 ## Verify
 

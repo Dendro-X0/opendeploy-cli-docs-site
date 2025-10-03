@@ -23,10 +23,10 @@ export const metadata = { title: "OpenDeploy CLI — Monorepo Usage" }
 
 ```bash
 # From app dir
-opendeploy env pull vercel --env preview
+opd env pull vercel --env preview
 
 # From DB package
-opendeploy seed --schema script --script db:push --env-file ../../apps/web/.env.preview.local --yes
+opd seed --schema script --script db:push --env-file ../../apps/web/.env.preview.local --yes
 ```
 
     <h2 id="independent-projects">Independent Projects</h2>

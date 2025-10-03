@@ -18,42 +18,42 @@ export const metadata = { title: "OpenDeploy CLI — Examples" }
 
 ```bash
 # From your app directory with .env.local present
-opendeploy env sync vercel --file .env.local --env preview --dry-run --json
+opd env sync vercel --file .env.local --env preview --dry-run --json
 ```
 
     <h2 id="env-pull">Env Pull</h2>
 
 ```bash
 # Preview → .env.preview.local
-opendeploy env pull vercel --env preview
+opd env pull vercel --env preview
 # Production → .env.production.local
-opendeploy env pull vercel --env prod
+opd env pull vercel --env prod
 ```
 
     <h2 id="seed-prisma">Seeding (Prisma)</h2>
 
 ```bash
-opendeploy seed --schema prisma --env-file .env.production.local --env prod --yes --json
+opd seed --schema prisma --env-file .env.production.local --env prod --yes --json
 ```
 
     <h2 id="seed-script">Seeding (Drizzle Script)</h2>
 
 ```bash
-opendeploy seed --schema script --script db:push --env-file ../../apps/web/.env.production.local --env prod --yes --json
+opd seed --schema script --script db:push --env-file ../../apps/web/.env.production.local --env prod --yes --json
 ```
 
     <h2 id="deploy-vercel">Deploy (Vercel)</h2>
 
 ```bash
 # Dry-run from monorepo root (apps/web)
-opendeploy up vercel --env preview --json --path apps/web
+opd up vercel --env preview --json --path apps/web
 ```
 
     <h2 id="run-orchestrate">Run (Orchestrate)</h2>
 
 ```bash
 # From workspace root
-opendeploy run --all --env preview --dry-run --json
+opd run --all --env preview --dry-run --json
 ```
 
     <h2 id="netlify-git-ci">Netlify Git/CI Setup</h2>
@@ -114,8 +114,8 @@ netlify.toml: add SPA redirect
 
 ```text
 Add variables under Site settings → Environment. Optional: sync from a local file using
-  opendeploy env sync netlify --file .env --project-id <SITE_ID> --yes
-In CI, prefer opendeploy with --gha and provider credentials.
+  opd env sync netlify --file .env --project-id <SITE_ID> --yes
+In CI, prefer opd with --gha and provider credentials.
 ```
   </article>
 </DocsLayout>
